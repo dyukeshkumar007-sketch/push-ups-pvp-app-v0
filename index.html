@@ -1,535 +1,740 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b09">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090b0a">
 <title>Push Ups PvP</title>
 
 <style>
 :root {
-  --bg:#080b09;
-  --panel:#111713;
-  --green:#b7ff32;
-  --muted:#9aa69c;
-  --border:#29352c;
+  --bg: #090b0a;
+  --panel: #131714;
+  --green: #a6ff4d;
+  --muted: #929b92;
+  --border: #293029;
+  --red: #ff6262;
 }
-* { box-sizing:border-box; }
+
+* { box-sizing: border-box; }
+
 body {
-  margin:0;
-  background:var(--bg);
-  color:#f3f7f3;
-  font-family:Arial,sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: #f5f7f4;
+  font-family: system-ui, -apple-system, sans-serif;
 }
+
+button, input { font: inherit; }
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: #202620;
+  color: white;
+  font-weight: 700;
+}
+
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+button.primary {
+  background: var(--green);
+  color: #10140c;
+  border-color: var(--green);
+}
+
+button.danger { color: var(--red); }
+
 header {
-  padding:20px 16px 12px;
-  border-bottom:1px solid var(--border);
+  padding: 20px 16px 12px;
+  max-width: 900px;
+  margin: auto;
 }
-.logo { font-size:22px;font-weight:900; }
-.logo span { color:var(--green); }
-header p { color:var(--muted);font-size:12px; }
-main { padding:16px;max-width:700px;margin:auto; }
+
+.logo { font-size: 23px; font-weight: 900; }
+.logo span { color: var(--green); }
+
+header p { color: var(--muted); margin: 5px 0; }
+
 nav {
-  display:flex;gap:6px;overflow-x:auto;
-  padding:10px;background:#0d120e;
-  position:sticky;top:0;z-index:5;
+  display: flex;
+  gap: 7px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  max-width: 900px;
+  margin: auto;
 }
-nav button {
-  flex:1;min-width:65px;padding:11px 7px;
-  border:0;border-radius:8px;background:transparent;
-  color:#b7c1b8;font-weight:bold;
+
+nav button { white-space: nowrap; }
+nav button.active { color: var(--green); border-color: var(--green); }
+
+main {
+  max-width: 900px;
+  padding: 10px 16px 100px;
+  margin: auto;
 }
-nav button.active {
-  background:var(--green);color:#111;
-}
-section { display:none; }
-section.active { display:block; }
-h1 { font-size:27px;margin:12px 0; }
-h2 { font-size:19px; }
-p { line-height:1.5; }
-.muted { color:var(--muted);font-size:13px; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+h1 { font-size: clamp(27px, 6vw, 43px); margin: 14px 0 8px; }
+h2 { font-size: 21px; }
+p { line-height: 1.5; }
+
+.muted { color: var(--muted); }
+
 .panel {
-  background:var(--panel);border:1px solid var(--border);
-  padding:16px;border-radius:14px;margin:12px 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  margin: 14px 0;
 }
-.stats {
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;margin:14px 0;
+
+.hero {
+  padding: 28px 20px;
+  border: 1px solid #38472e;
+  background: linear-gradient(140deg, #182116, #101310 65%);
+  border-radius: 22px;
+  margin-top: 10px;
 }
+
+.hero h1 span { color: var(--green); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
 .stat {
-  background:#141b15;border:1px solid var(--border);
-  border-radius:12px;padding:14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 17px;
+  border-radius: 16px;
 }
-.number { font-size:29px;font-weight:900;color:var(--green); }
-button.action {
-  background:var(--green);color:#10140c;
-  border:0;border-radius:9px;padding:13px;
-  font-weight:800;width:100%;margin:5px 0;cursor:pointer;
+
+.stat strong {
+  display: block;
+  font-size: 29px;
+  color: var(--green);
 }
-button.secondary {
-  background:#202a21;color:white;
-  border:1px solid var(--border);
-}
-button:disabled { opacity:.45; }
+
+.stat small { color: var(--muted); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+
+label { display: block; margin: 12px 0 6px; color: var(--muted); }
+
 input {
-  width:100%;padding:13px;margin:6px 0;
-  background:#090e0a;color:white;
-  border:1px solid var(--border);border-radius:8px;
+  width: 100%;
+  background: #090b0a;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: white;
+  padding: 13px;
 }
-#cameraWrap {
-  position:relative;background:#000;border-radius:12px;
-  overflow:hidden;min-height:180px;
+
+#cameraBox {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #050605;
+  border: 1px solid #354034;
+  border-radius: 16px;
+  overflow: hidden;
 }
-#video {
-  display:block;width:100%;height:auto;
-  transform:scaleX(-1);
+
+#video, #skeleton {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scaleX(-1);
 }
-#overlay {
-  position:absolute;inset:0;width:100%;height:100%;
-  transform:scaleX(-1);pointer-events:none;
+
+#video { opacity: .92; }
+#skeleton { pointer-events: none; }
+
+#cameraMessage {
+  position: absolute;
+  z-index: 2;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  background: #080b08dc;
+  border: 1px solid #394237;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 13px;
+  color: var(--green);
 }
-.cameraStatus {
-  padding:10px;background:#192019;color:var(--green);
-  border-radius:8px;margin:10px 0;font-size:13px;
+
+#repNumber {
+  font-size: clamp(65px, 16vw, 100px);
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--green);
+  margin: 16px 0 5px;
 }
-#repBig { font-size:68px;font-weight:900;color:var(--green); }
-.hidden { display:none!important; }
-footer { text-align:center;padding:25px;color:var(--muted);font-size:12px; }
+
+.center { text-align: center; }
+.badge {
+  display: inline-block;
+  background: #202820;
+  color: var(--green);
+  padding: 6px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.notice {
+  color: var(--muted);
+  font-size: 13px;
+  border-left: 3px solid var(--green);
+  padding-left: 12px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
 </style>
 </head>
 
 <body>
+
 <header>
   <div class="logo">PUSH UPS <span>PvP</span></div>
-  <p>YOUR REPS. YOUR RECORD. YOUR RIVAL.</p>
+  <p>Every rep counts. Earn your place.</p>
 </header>
 
 <nav>
   <button class="active" data-page="home">Home</button>
-  <button data-page="training">Train</button>
+  <button data-page="train">Train</button>
   <button data-page="pvp">PvP</button>
-  <button data-page="leaderboard">Ranks</button>
+  <button data-page="ranks">Ranks</button>
   <button data-page="account">Account</button>
 </nav>
 
 <main>
-<section id="home" class="active">
-  <h1>Earn every rep.</h1>
-  <p class="muted">No preset rep target. Your valid reps build your score.</p>
 
-  <div class="stats">
-    <div class="stat"><div class="muted">TOTAL REPS</div><div id="homeTotal" class="number">0</div></div>
-    <div class="stat"><div class="muted">BEST SESSION</div><div id="homeBest" class="number">0</div></div>
+<section class="page active" id="home">
+  <div class="hero">
+    <span class="badge">YOUR TRAINING STARTS HERE</span>
+    <h1>ONE MORE REP.<br><span>ONE STEP HIGHER.</span></h1>
+    <p class="muted">Train at your pace. Track your progress. Compete when online PvP is ready.</p>
+    <div class="actions">
+      <button class="primary" onclick="showPage('train')">START TRAINING →</button>
+      <button onclick="showPage('account')">YOUR ACCOUNT</button>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:14px">
+    <div class="stat">
+      <strong id="homeTotal">0</strong>
+      <small>Total push-ups</small>
+    </div>
+    <div class="stat">
+      <strong id="homeSessions">0</strong>
+      <small>Sessions completed</small>
+    </div>
   </div>
 
   <div class="panel">
-    <h2>Ready to train?</h2>
-    <p class="muted">Place your phone securely at your side so your whole body is visible. Use a stable surface and good lighting.</p>
-    <button class="action" onclick="showPage('training')">OPEN AI COUNTER →</button>
-  </div>
-
-  <div class="panel">
-    <h2>How scoring works</h2>
-    <p>1. Start the camera.</p>
-    <p>2. Reach the top position, lower yourself, then return to the top.</p>
-    <p>3. The prototype counts a detected full movement cycle.</p>
-    <p class="muted">Pose detection is an estimate, not a perfect judge of exercise form.</p>
+    <h2>How it works</h2>
+    <p>01 — Position your phone so your body is visible.</p>
+    <p>02 — Let the camera detector identify your pose.</p>
+    <p>03 — Perform controlled push-ups and check your rep count.</p>
+    <p class="notice">Camera detection is experimental. Check your form yourself, and stop if you feel pain, dizziness, or unusual discomfort.</p>
   </div>
 </section>
 
-<section id="training">
-  <h1>AI Training</h1>
-  <p class="muted">Camera-based push-up counter · prototype v1</p>
+<section class="page" id="train">
+  <h1>Training arena</h1>
+  <p class="muted">No fixed rep target. Finish when you choose.</p>
 
   <div class="panel">
-    <div id="cameraWrap">
+    <div class="badge" id="detectorBadge">DETECTOR NOT STARTED</div>
+
+    <div id="cameraBox" style="margin-top:14px">
       <video id="video" autoplay playsinline muted></video>
-      <canvas id="overlay"></canvas>
-    </div>
-    <div class="cameraStatus" id="status">Camera is off.</div>
-
-    <div style="text-align:center">
-      <div id="repBig">0</div>
-      <div class="muted">VALID DETECTED REPS</div>
+      <canvas id="skeleton"></canvas>
+      <div id="cameraMessage" role="status">Press START CAMERA to load the detector.</div>
     </div>
 
-    <button id="startBtn" class="action" onclick="startCamera()">START CAMERA</button>
-    <button id="stopBtn" class="action secondary" onclick="stopCamera()" disabled>STOP CAMERA</button>
-    <button class="action secondary" onclick="resetSession()">RESET SESSION</button>
-    <button class="action" onclick="finishSession()">FINISH & SAVE SCORE</button>
+    <div class="center">
+      <div id="repNumber">0</div>
+      <div class="muted">REPS DETECTED THIS SESSION</div>
+      <p id="formStatus">Camera is off.</p>
+    </div>
+
+    <div class="actions">
+      <button id="startButton" class="primary" onclick="startCamera()">START CAMERA</button>
+      <button id="stopButton" onclick="stopCamera()">STOP CAMERA</button>
+      <button onclick="resetSession()">RESET REPS</button>
+      <button class="primary" onclick="finishSession()">FINISH SESSION</button>
+    </div>
   </div>
 
   <div class="panel">
-    <h2>Setup checklist</h2>
-    <p>• Film from the side, with shoulders, hips, knees and ankles visible.</p>
-    <p>• Keep the phone steady and the space around you clear.</p>
-    <p>• The first full extension establishes the starting position.</p>
-    <p class="muted">This early prototype uses elbow angle and a rough body-alignment check. It may miss reps or count incorrectly. Review your form yourself, and stop if you feel pain or dizziness.</p>
+    <h2>Camera setup</h2>
+    <p class="muted">Place the phone securely at a side angle, far enough away to show your shoulders, elbows, hips and ankles. Good lighting helps.</p>
+    <p class="notice">The detector runs in your browser. Your camera video is not intentionally uploaded by this app. The counter is a prototype and may miss or incorrectly count repetitions.</p>
   </div>
 </section>
 
-<section id="pvp">
-  <h1>Player vs Player</h1>
+<section class="page" id="pvp">
+  <h1>Real-time PvP</h1>
   <div class="panel">
-    <h2>Online battles are coming</h2>
-    <p class="muted">The camera counter comes first. Real-time rooms, opponent synchronization and verified scores are not implemented yet.</p>
-    <button class="action" onclick="showPage('training')">PRACTICE NOW</button>
+    <span class="badge">COMING NEXT</span>
+    <h2>Challenge another player</h2>
+    <p class="muted">Live rooms, room codes, verified scores and worldwide competition are not connected yet.</p>
+    <p>First we're getting reliable pose detection and rep counting working. Then we can build secure online matches.</p>
   </div>
 </section>
 
-<section id="leaderboard">
+<section class="page" id="ranks">
   <h1>Leaderboard</h1>
   <div class="panel">
-    <p class="muted">Local record on this device</p>
-    <div class="stats">
-      <div class="stat"><div class="muted">TOTAL REPS</div><div class="number" id="rankTotal">0</div></div>
-      <div class="stat"><div class="muted">BEST SESSION</div><div class="number" id="rankBest">0</div></div>
+    <span class="badge">LOCAL STATS ONLY</span>
+    <h2>Your current record</h2>
+    <div class="stat">
+      <strong id="rankTotal">0</strong>
+      <small>Total reps on this device</small>
     </div>
-    <p class="muted">This is not yet a worldwide leaderboard.</p>
+    <p class="muted">A worldwide leaderboard will require verified server-side score handling. This screen does not yet show global rankings.</p>
   </div>
 </section>
 
-<section id="account">
-  <h1>Account</h1>
-  <div class="panel">
-    <p id="authStatus" class="muted">Not signed in.</p>
-    <input id="email" type="email" placeholder="Email address" autocomplete="email">
-    <input id="password" type="password" placeholder="Password (minimum 6 characters)" autocomplete="current-password">
-    <input id="username" type="text" placeholder="Username (3–20 characters)" maxlength="20">
-    <button class="action" onclick="signUp()">CREATE ACCOUNT</button>
-    <button class="action secondary" onclick="signIn()">SIGN IN</button>
-    <button class="action secondary" onclick="signOut()">SIGN OUT</button>
-    <p id="authMessage" class="muted"></p>
+<section class="page" id="account">
+  <h1>Your account</h1>
+
+  <div class="panel" id="accountStatus">
+    <span class="badge">SUPABASE AUTH</span>
+    <p id="authMessage">Sign in or create an account to use authentication.</p>
+
+    <label for="username">Username</label>
+    <input id="username" maxlength="20" placeholder="3–20 characters">
+
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
+
+    <label for="password">Password</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="At least 6 characters">
+
+    <div class="actions">
+      <button class="primary" onclick="signUp()">CREATE ACCOUNT</button>
+      <button onclick="signIn()">SIGN IN</button>
+      <button class="danger" onclick="signOut()">SIGN OUT</button>
+    </div>
   </div>
-  <p class="muted">Never share your password or Supabase secret/service-role key.</p>
+
+  <div class="panel">
+    <h2>Privacy</h2>
+    <p class="muted">Your training totals currently stay in this browser's local storage. Authentication uses Supabase. This prototype does not upload workout video or submit training scores to the database.</p>
+  </div>
 </section>
+
 </main>
 
-<footer>BUILT TO BEAT YOUR PERSONAL BEST.</footer>
+<footer>Push Ups PvP · Experimental build</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
 
-<script>
-// Supabase public project configuration
-const SUPABASE_URL = "https://fyonthacrbhwtsngfwcx.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Jv6ytXHc5sOuf9c5x3qR-Q_MuyhYi83";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<script type="module">
+import {
+  FilesetResolver,
+  PoseLandmarker
+} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/vision_bundle.mjs";
 
 const $ = id => document.getElementById(id);
 
-let reps = 0;
-let total = Number(localStorage.getItem("pvp_total") || 0);
-let best = Number(localStorage.getItem("pvp_best") || 0);
+const SUPABASE_URL = "https://fyonthacrbhwtsngfwcx.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Jv6ytXHc5sOuf9c5x3qR-Q_MuyhYi83";
+const REDIRECT_URL = "https://dyukeshkumar007-sketch.github.io/push-ups-pvp-app-v0/";
+
+let supabase = null;
+let poseLandmarker = null;
 let stream = null;
-let pose = null;
-let animationId = null;
-let processing = false;
-let lastProcessed = 0;
-let phase = "waiting";
-let lastCountAt = 0;
+let running = false;
+let detecting = false;
+let animationId = 0;
+let reps = 0;
+let sessions = Number(localStorage.getItem("pvpSessions") || 0);
+let total = Number(localStorage.getItem("pvpTotal") || 0);
+let phase = "up";
+let lastVideoTime = -1;
+let lastRepTime = 0;
+let lastStatus = "Camera is off.";
 let currentUser = null;
 
-function showPage(page) {
-  document.querySelectorAll("main section").forEach(s => s.classList.remove("active"));
-  $(page).classList.add("active");
-  document.querySelectorAll("nav button").forEach(b => {
-    b.classList.toggle("active", b.dataset.page === page);
-  });
-  window.scrollTo(0, 0);
+const canvas = $("skeleton");
+const ctx = canvas.getContext("2d");
+const video = $("video");
+
+function message(text) {
+  $("cameraMessage").textContent = text;
+  lastStatus = text;
 }
 
-document.querySelectorAll("nav button").forEach(b =>
-  b.addEventListener("click", () => showPage(b.dataset.page))
-);
+function detectorStatus(text) {
+  $("detectorBadge").textContent = text;
+}
 
-function updateStats() {
+function refreshStats() {
   $("homeTotal").textContent = total;
   $("rankTotal").textContent = total;
-  $("homeBest").textContent = best;
-  $("rankBest").textContent = best;
-  $("repBig").textContent = reps;
-  localStorage.setItem("pvp_total", total);
-  localStorage.setItem("pvp_best", best);
-}
-updateStats();
-
-// Calculate an angle ABC, with B as the joint.
-function angle(a, b, c) {
-  const radians = Math.atan2(c.y-b.y, c.x-b.x) -
-                  Math.atan2(a.y-b.y, a.x-b.x);
-  let degrees = Math.abs(radians * 180 / Math.PI);
-  if (degrees > 180) degrees = 360 - degrees;
-  return degrees;
+  $("homeSessions").textContent = sessions;
 }
 
-function visible(lm, ids) {
-  return ids.every(i => lm[i] && (lm[i].visibility ?? 1) > 0.55);
+function saveStats() {
+  localStorage.setItem("pvpTotal", String(total));
+  localStorage.setItem("pvpSessions", String(sessions));
+  refreshStats();
 }
 
-function drawPose(results) {
-  const canvas = $("overlay");
-  const video = $("video");
-  const ctx = canvas.getContext("2d");
+window.showPage = function(page) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.page === page));
+  $(page).classList.add("active");
+};
 
-  if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-  }
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+document.querySelectorAll("nav button").forEach(button => {
+  button.addEventListener("click", () => showPage(button.dataset.page));
+});
 
-  const lm = results.poseLandmarks;
-  if (!lm) {
-    $("status").textContent = "Body not detected. Move back so your whole body is visible.";
-    return;
-  }
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.max(1, Math.round(rect.width * dpr));
+  canvas.height = Math.max(1, Math.round(rect.height * dpr));
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
 
-  // MediaPipe pose landmarks:
-  // shoulder 11, elbow 13, wrist 15, hip 23, knee 25, ankle 27
-  const ids = [11,13,15,23,25,27];
-  if (!visible(lm, ids)) {
-    $("status").textContent = "Body partly hidden. Show your whole side profile.";
-    return;
-  }
+window.addEventListener("resize", resizeCanvas);
 
-  // Draw a simple skeleton guide.
-  const links = [[11,13],[13,15],[11,23],[23,25],[25,27]];
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = "#b7ff32";
-  links.forEach(([a,b]) => {
+function drawPose(landmarks) {
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  ctx.clearRect(0, 0, w, h);
+
+  if (!landmarks || !landmarks.length) return;
+
+  // MediaPipe landmark connections.
+  const connections = [
+    [11,12], [11,13], [13,15], [12,14], [14,16],
+    [11,23], [12,24], [23,24], [23,25], [25,27],
+    [24,26], [26,28], [27,29], [29,31], [28,30],
+    [30,32], [15,17], [15,19], [15,21], [16,18],
+    [16,20], [16,22]
+  ];
+
+  const visible = i => {
+    const p = landmarks[i];
+    return p && (p.visibility == null || p.visibility > 0.35);
+  };
+
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "#a6ff4d";
+  ctx.shadowColor = "#a6ff4d";
+  ctx.shadowBlur = 7;
+
+  for (const [a,b] of connections) {
+    if (!visible(a) || !visible(b)) continue;
     ctx.beginPath();
-    ctx.moveTo(lm[a].x*canvas.width,lm[a].y*canvas.height);
-    ctx.lineTo(lm[b].x*canvas.width,lm[b].y*canvas.height);
+    ctx.moveTo(landmarks[a].x * w, landmarks[a].y * h);
+    ctx.lineTo(landmarks[b].x * w, landmarks[b].y * h);
     ctx.stroke();
-  });
+  }
 
-  ids.forEach(i => {
+  ctx.shadowBlur = 0;
+  for (let i = 11; i < landmarks.length; i++) {
+    if (!visible(i)) continue;
+    const p = landmarks[i];
     ctx.beginPath();
-    ctx.arc(lm[i].x*canvas.width,lm[i].y*canvas.height,5,0,Math.PI*2);
+    ctx.arc(p.x * w, p.y * h, 4, 0, Math.PI * 2);
     ctx.fillStyle = "#ffffff";
     ctx.fill();
-  });
-
-  const elbow = angle(lm[11], lm[13], lm[15]);
-  const body = angle(lm[11], lm[23], lm[27]);
-  const now = Date.now();
-
-  // These thresholds are only initial estimates; camera angle and body shape vary.
-  if (body < 145) {
-    $("status").textContent = "Body alignment uncertain — straighten your body and reposition the camera.";
-    return;
-  }
-
-  if (elbow > 150) {
-    if (phase === "bottom" && now - lastCountAt > 700) {
-      reps++;
-      total++;
-      best = Math.max(best, reps);
-      lastCountAt = now;
-      updateStats();
-      $("status").textContent = "REP COUNTED ✓  Back at the top.";
-      phase = "top";
-    } else if (phase === "waiting") {
-      phase = "top";
-      $("status").textContent = "Top position detected. Lower under control.";
-    } else {
-      $("status").textContent = "Top position detected.";
-    }
-  } else if (elbow < 95) {
-    if (phase === "top") {
-      phase = "bottom";
-      $("status").textContent = "Bottom position detected. Push back up.";
-    } else if (phase === "waiting") {
-      $("status").textContent = "Reach the top position to begin.";
-    } else {
-      $("status").textContent = "Bottom position detected.";
-    }
-  } else {
-    $("status").textContent = "Movement detected. Complete the full range.";
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#a6ff4d";
+    ctx.stroke();
   }
 }
 
-async function startCamera() {
-  if (stream) return;
-  $("startBtn").disabled = true;
-  $("status").textContent = "Requesting camera permission…";
+function angle(a,b,c) {
+  const abx = a.x - b.x;
+  const aby = a.y - b.y;
+  const cbx = c.x - b.x;
+  const cby = c.y - b.y;
+
+  const dot = abx * cbx + aby * cby;
+  const mag1 = Math.hypot(abx, aby);
+  const mag2 = Math.hypot(cbx, cby);
+  if (!mag1 || !mag2) return 0;
+
+  const cos = Math.max(-1, Math.min(1, dot / (mag1 * mag2)));
+  return Math.acos(cos) * 180 / Math.PI;
+}
+
+function countPose(lm) {
+  const indices = [11,12,13,14,15,16,23,24,27,28];
+  const visible = i => lm[i] && (lm[i].visibility == null || lm[i].visibility > 0.4);
+
+  if (!indices.some(visible) || !visible(11) || !visible(13) || !visible(15)) {
+    $("formStatus").textContent = "Move back so your upper body is visible.";
+    return;
+  }
+
+  const left = angle(lm[11], lm[13], lm[15]);
+  const rightVisible = visible(12) && visible(14) && visible(16);
+  const right = rightVisible ? angle(lm[12], lm[14], lm[16]) : left;
+
+  // Prefer the arm with the clearest visible landmarks.
+  const elbow = rightVisible ? Math.min(left, right) : left;
+
+  if (elbow < 100) {
+    phase = "down";
+    $("formStatus").textContent = "DOWN POSITION — press up smoothly.";
+  } else if (elbow > 155) {
+    $("formStatus").textContent = "TOP POSITION — lower with control.";
+    if (phase === "down" && performance.now() - lastRepTime > 450) {
+      reps++;
+      lastRepTime = performance.now();
+      phase = "up";
+      $("repNumber").textContent = reps;
+      message("Pose detected · " + reps + " reps counted");
+    }
+  } else {
+    $("formStatus").textContent = "Pose detected — keep moving through the rep.";
+  }
+}
+
+async function loadDetector() {
+  if (poseLandmarker) return;
+
+  detectorStatus("LOADING AI...");
+  message("Loading pose detector and AI model. First load may take a little while.");
+
+  const vision = await FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
+  );
+
+  poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
+    baseOptions: {
+      modelAssetPath:
+        "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+      delegate: "CPU"
+    },
+    runningMode: "VIDEO",
+    numPoses: 1,
+    minPoseDetectionConfidence: 0.45,
+    minPosePresenceConfidence: 0.45,
+    minTrackingConfidence: 0.45
+  });
+
+  detectorStatus("AI READY");
+}
+
+async function detectFrame() {
+  if (!running || detecting) return;
+
+  if (video.readyState < 2 || video.videoWidth === 0) {
+    animationId = requestAnimationFrame(detectFrame);
+    return;
+  }
+
+  if (video.currentTime === lastVideoTime) {
+    animationId = requestAnimationFrame(detectFrame);
+    return;
+  }
+
+  detecting = true;
+  lastVideoTime = video.currentTime;
 
   try {
-    if (!window.isSecureContext) {
-      throw new Error("Open this site over HTTPS in Chrome.");
+    const result = poseLandmarker.detectForVideo(video, performance.now());
+    const landmarks = result.landmarks && result.landmarks[0];
+
+    resizeCanvas();
+
+    if (landmarks) {
+      drawPose(landmarks);
+      countPose(landmarks);
+      detectorStatus("POSE DETECTED");
+    } else {
+      ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+      detectorStatus("SEARCHING FOR BODY...");
+      $("formStatus").textContent = "No full body detected. Adjust your phone and lighting.";
+      message("AI is running. Move into the camera view so your body can be detected.");
     }
+  } catch (error) {
+    console.error("Pose detection error:", error);
+    message("Detection error: " + (error.message || String(error)));
+    detectorStatus("DETECTION ERROR");
+    running = false;
+  } finally {
+    detecting = false;
+  }
+
+  if (running) animationId = requestAnimationFrame(detectFrame);
+}
+
+window.startCamera = async function() {
+  if (running) return;
+
+  $("startButton").disabled = true;
+
+  try {
+    message("Requesting camera permission...");
+
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      throw new Error("Camera access isn't supported in this browser.");
+      throw new Error("Camera unavailable. Open this app using HTTPS in Chrome.");
     }
-    if (typeof Pose === "undefined") {
-      throw new Error("Pose model did not load. Check your internet and reload.");
-    }
+
+    await loadDetector();
 
     stream = await navigator.mediaDevices.getUserMedia({
       audio: false,
-      video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }
-    });
-
-    $("video").srcObject = stream;
-    await $("video").play();
-
-    pose = new Pose({
-      locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
-    });
-    pose.setOptions({
-      modelComplexity: 1,
-      smoothLandmarks: true,
-      enableSegmentation: false,
-      minDetectionConfidence: 0.6,
-      minTrackingConfidence: 0.6
-    });
-    pose.onResults(drawPose);
-
-    phase = "waiting";
-    lastProcessed = 0;
-    processing = false;
-    $("stopBtn").disabled = false;
-    $("status").textContent = "Camera on. Show your full body from the side.";
-
-    async function loop(timestamp) {
-      if (!stream) return;
-      if (!processing && timestamp - lastProcessed > 100) {
-        processing = true;
-        lastProcessed = timestamp;
-        try {
-          if ($("video").readyState >= 2) await pose.send({image:$("video")});
-        } catch (e) {
-          $("status").textContent = "Pose tracking hiccup. Keep the camera steady.";
-        }
-        processing = false;
+      video: {
+        facingMode: "user",
+        width: { ideal: 640 },
+        height: { ideal: 480 }
       }
-      if (stream) animationId = requestAnimationFrame(loop);
-    }
-    animationId = requestAnimationFrame(loop);
+    });
 
-  } catch (e) {
-    $("status").textContent = e.message || "Couldn't start camera.";
-    if (stream) stream.getTracks().forEach(t => t.stop());
+    video.srcObject = stream;
+    await video.play();
+
+    await new Promise(resolve => {
+      if (video.readyState >= 2) resolve();
+      else video.addEventListener("loadeddata", resolve, { once: true });
+    });
+
+    resizeCanvas();
+    running = true;
+    phase = "up";
+    lastVideoTime = -1;
+    $("formStatus").textContent = "Stand where your body is visible.";
+    message("Camera and AI ready. Position your body in the frame.");
+    detectFrame();
+  } catch (error) {
+    console.error("Camera/detector startup error:", error);
+    detectorStatus("STARTUP FAILED");
+    message("ERROR: " + (error.message || String(error)) + " — check internet and reload.");
+    $("formStatus").textContent = "Could not start camera or detector.";
+    if (stream) stream.getTracks().forEach(track => track.stop());
     stream = null;
-    $("startBtn").disabled = false;
+    video.srcObject = null;
+  } finally {
+    $("startButton").disabled = false;
   }
-}
+};
 
-function stopCamera() {
-  if (animationId) cancelAnimationFrame(animationId);
-  animationId = null;
-  if (stream) stream.getTracks().forEach(t => t.stop());
-  stream = null;
-  processing = false;
-  $("video").srcObject = null;
-  $("overlay").getContext("2d").clearRect(0,0,$("overlay").width,$("overlay").height);
-  $("startBtn").disabled = false;
-  $("stopBtn").disabled = true;
-  $("status").textContent = "Camera stopped.";
-}
+window.stopCamera = function() {
+  running = false;
+  cancelAnimationFrame(animationId);
 
-function resetSession() {
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+    stream = null;
+  }
+
+  video.srcObject = null;
+  ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+  detectorStatus(poseLandmarker ? "AI READY · CAMERA OFF" : "DETECTOR NOT STARTED");
+  message("Camera stopped.");
+  $("formStatus").textContent = "Camera is off.";
+};
+
+window.resetSession = function() {
   reps = 0;
-  phase = "waiting";
-  lastCountAt = 0;
-  updateStats();
-  $("status").textContent = stream ? "Session reset. Reach the top position to begin." : "Session reset. Start the camera when ready.";
-}
+  phase = "up";
+  $("repNumber").textContent = "0";
+  $("formStatus").textContent = "Session reps reset.";
+};
 
-async function finishSession() {
+window.finishSession = function() {
   stopCamera();
-  if (reps === 0) {
-    $("status").textContent = "No reps recorded in this session.";
+
+  if (reps > 0) {
+    total += reps;
+    sessions++;
+    saveStats();
+    alert("Session finished!\n\nReps counted: " + reps +
+      "\nTotal on this device: " + total +
+      "\n\nCamera-based counting is experimental. Review your form and results.");
+  } else {
+    alert("Session finished. No reps were counted.");
+  }
+
+  reps = 0;
+  phase = "up";
+  $("repNumber").textContent = "0";
+};
+
+function setupSupabase() {
+  if (!window.supabase || !window.supabase.createClient) {
+    $("authMessage").textContent = "Authentication library failed to load. Check your internet connection.";
     return;
   }
-  $("status").textContent = `Session saved on this device: ${reps} detected reps.`;
-  // Scores are stored locally only. Server-verified PvP saving is not implemented.
-  alert(`Session complete: ${reps} detected reps. Total: ${total}.`);
+
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  supabase.auth.getSession().then(({ data }) => {
+    currentUser = data.session?.user || null;
+    showAuthState();
+  });
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    currentUser = session?.user || null;
+    showAuthState();
+  });
 }
 
-// Account support
-async function signUp() {
+function showAuthState() {
+  if (currentUser) {
+    $("authMessage").textContent = "Signed in as " + currentUser.email;
+    $("email").value = currentUser.email || "";
+  } else {
+    $("authMessage").textContent = "Not signed in. Create an account or sign in.";
+  }
+}
+
+window.signUp = async function() {
+  if (!supabase) return alert("Authentication is not ready. Reload the page.");
+
+  const username = $("username").value.trim();
   const email = $("email").value.trim();
   const password = $("password").value;
-  const username = $("username").value.trim();
 
-  if (!email || password.length < 6 || username.length < 3 || username.length > 20) {
-    $("authMessage").textContent = "Enter an email, password of at least 6 characters, and username of 3–20 characters.";
-    return;
+  if (username.length < 3 || username.length > 20) {
+    return alert("Username must be 3–20 characters.");
+  }
+  if (!email || password.length < 6) {
+    return alert("Enter a valid email and a password of at least 6 characters.");
   }
 
-  $("authMessage").textContent = "Creating account…";
-  const {data,error} = await db.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: { username },
-      emailRedirectTo: "https://dyukeshkumar007-sketch.github.io/push-ups-pvp-app-v0/"
+      emailRedirectTo: REDIRECT_URL
     }
   });
 
-  if (error) {
-    $("authMessage").textContent = error.message;
-    return;
-  }
+  if (error) return alert("Sign-up failed: " + error.message);
 
   if (data.session) {
-    currentUser = data.user;
     await ensureProfile(username);
-    $("authMessage").textContent = "Account created and signed in.";
-  } else {
-    $("authMessage").textContent = "Check your email to verify your account, then return here and sign in.";
-  }
-}
-
-async function signIn() {
-  const email = $("email").value.trim();
-  const password = $("password").value;
-  $("authMessage").textContent = "Signing in…";
-
-  const {data,error} = await db.auth.signInWithPassword({email,password});
-  if (error) {
-    $("authMessage").textContent = error.message;
-    return;
-  }
-  currentUser = data.user;
-  await ensureProfile($("username").value.trim() || data.user.user_metadata?.username || "player");
-  $("authStatus").textContent = "Signed in as " + (data.user.email || "player");
-  $("authMessage").textContent = "Signed in successfully.";
-}
-
-async function ensureProfile(username) {
-  if (!currentUser) return;
-  // A profile may already exist. Do not overwrite an existing username on sign-in.
-  const {data:existing} = await db.from("profiles")
-    .select("id,username").eq("id",currentUser.id).maybeSingle();
-
-  if (existing) return;
-
-  const cleanName = (username || "player").replace(/[^a-zA-Z0-9_]/g,"").slice(0,20);
-  const {error} = await db.from("profiles").insert({
-    id:currentUser.id,
-    username:cleanName.length >= 3 ? cleanName : "player" + currentUser.id.slice(0,6)
-  });
-
-  if (error) $("authMessage").textContent = "Signed in, but profile setup needs attention: " + error.message;
-}
-
-async function signOut() {
-  const {error} = await db.auth.signOut();
-  currentUser = null;
-  $("authStatus").textContent = "Not signed in.";
-  $("authMessage").textContent = error ? error.message : "Signed out.";
-}
-
-db.auth.getSession().then(async ({data}) => {
-  currentUser = data.session?.user || null;
-  if (currentUser) {
-    $("authStatus").textContent = "Signed in as " + (currentUser.email || "player");
-  }
-});
-</script>
-</body>
-</html>
-
+    alert("Account created!");
+  } else 
