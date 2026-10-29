@@ -508,9 +508,7 @@ function handleClick(event) {
     if (!it) return;
     if (!state.owned.includes(it.id)) {
       if (state.gold < it.price) {
-        notify("Not enough gold. Earn more
-               
- gold to buy this item."); 
+        notify("Not enough gold. Earn more gold to buy this item."); 
         return;
       }
       state.gold -= it.price;
