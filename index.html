@@ -1,6 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+(function () {
+  function showError(message) {
+    var box = document.getElementById("debug-error");
+    if (!box) {
+      box = document.createElement("pre");
+      box.id = "debug-error";
+      box.style.cssText =
+        "position:fixed;inset:10px;z-index:999999;" +
+        "background:#200;color:#fff;padding:16px;" +
+        "overflow:auto;white-space:pre-wrap;font-size:14px";
+      document.addEventListener("DOMContentLoaded", function () {
+        document.body.appendChild(box);
+      });
+      if (document.body) document.body.appendChild(box);
+    }
+    box.textContent += "\nERROR: " + message + "\n";
+  }
+
+  window.addEventListener("error", function (event) {
+    showError(
+      event.message + " | Line: " + event.lineno
+    );
+  });
+
+  window.addEventListener("unhandledrejection", function (event) {
+    showError("Promise error: " + event.reason);
+  });
+})();
+  </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b0b10">
