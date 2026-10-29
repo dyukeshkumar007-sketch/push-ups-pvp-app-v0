@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080b09">
 <title>Push Ups PvP</title>
 
@@ -10,580 +11,525 @@
 :root {
   --bg:#080b09;
   --panel:#111713;
-  --green:#71ff8b;
-  --muted:#8c9a8e;
-  --border:#26352a;
-  --red:#ff6262;
+  --green:#b7ff32;
+  --muted:#9aa69c;
+  --border:#29352c;
 }
 * { box-sizing:border-box; }
 body {
   margin:0;
   background:var(--bg);
-  color:#f2fff4;
-  font-family:system-ui,-apple-system,sans-serif;
+  color:#f3f7f3;
+  font-family:Arial,sans-serif;
 }
-button,input { font:inherit; }
-button { cursor:pointer; }
 header {
-  padding:20px;
+  padding:20px 16px 12px;
   border-bottom:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
 }
-.logo { font-weight:900; font-size:19px; letter-spacing:-.7px; }
+.logo { font-size:22px;font-weight:900; }
 .logo span { color:var(--green); }
-.status { color:var(--green); font-size:11px; }
-main { max-width:720px; margin:auto; padding:20px 16px 100px; }
-section.hidden { display:none; }
-h1 { font-size:34px; line-height:1.1; margin:12px 0; letter-spacing:-1.5px; }
-h2 { font-size:22px; margin-top:8px; }
-p { color:var(--muted); line-height:1.6; }
-.eyebrow {
-  color:var(--green); font-size:11px; font-weight:800;
-  letter-spacing:2px; text-transform:uppercase;
-}
-.card {
-  background:var(--panel); border:1px solid var(--border);
-  border-radius:18px; padding:20px; margin:16px 0;
-}
-.hero {
-  background:radial-gradient(ellipse at top right,#173921 0%,#111713 48%,#111713 100%);
-  border-color:#31543a;
-  padding:25px;
-}
-.grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.stat {
-  background:#0a100c; border:1px solid var(--border);
-  border-radius:13px; padding:14px;
-}
-.stat strong { display:block; font-size:25px; color:var(--green); }
-.stat small { color:var(--muted); }
-.btn {
-  width:100%; padding:14px; border:0; border-radius:11px;
-  font-weight:800; margin-top:10px;
-  background:var(--green); color:#071009;
-}
-.btn.secondary {
-  background:#1a251d; color:#f2fff4; border:1px solid var(--border);
-}
-.btn.danger { color:var(--red); background:#271515; }
-.btn:active { transform:scale(.99); }
-.row { display:flex; gap:10px; }
-.row > * { flex:1; min-width:0; }
-input {
-  display:block; width:100%; margin:8px 0 12px; padding:13px;
-  color:white; background:#080d09; border:1px solid var(--border);
-  border-radius:10px; outline:none;
-}
-input:focus { border-color:var(--green); }
-label { color:#b6c6b8; font-size:13px; }
-.counter {
-  font-size:86px; font-weight:900; text-align:center;
-  color:var(--green); line-height:1.2; margin:20px 0;
-  text-shadow:0 0 28px #71ff8b20;
-}
-.center { text-align:center; }
+header p { color:var(--muted);font-size:12px; }
+main { padding:16px;max-width:700px;margin:auto; }
 nav {
-  position:fixed; bottom:0; left:0; right:0; z-index:5;
-  display:flex; justify-content:center; gap:4px;
-  background:#0c110dee; border-top:1px solid var(--border);
-  padding:9px 5px calc(9px + env(safe-area-inset-bottom));
-  backdrop-filter:blur(12px);
+  display:flex;gap:6px;overflow-x:auto;
+  padding:10px;background:#0d120e;
+  position:sticky;top:0;z-index:5;
 }
 nav button {
-  background:transparent; color:var(--muted); border:0;
-  border-radius:10px; padding:10px 9px; font-size:11px;
-  font-weight:700; flex:1; max-width:130px;
+  flex:1;min-width:65px;padding:11px 7px;
+  border:0;border-radius:8px;background:transparent;
+  color:#b7c1b8;font-weight:bold;
 }
-nav button.active { background:#1b3020; color:var(--green); }
-.notice { font-size:12px; color:var(--muted); }
-.green { color:var(--green); }
-.list-item {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:12px 0; border-bottom:1px solid var(--border); gap:10px;
+nav button.active {
+  background:var(--green);color:#111;
 }
-.list-item:last-child { border-bottom:0; }
-.pill {
-  border:1px solid var(--border); color:var(--green);
-  padding:5px 9px; border-radius:99px; font-size:11px;
+section { display:none; }
+section.active { display:block; }
+h1 { font-size:27px;margin:12px 0; }
+h2 { font-size:19px; }
+p { line-height:1.5; }
+.muted { color:var(--muted);font-size:13px; }
+.panel {
+  background:var(--panel);border:1px solid var(--border);
+  padding:16px;border-radius:14px;margin:12px 0;
 }
-#toast {
-  position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
-  background:#213b27; border:1px solid #416c49; padding:12px 16px;
-  border-radius:10px; display:none; z-index:10;
-  width:max-content; max-width:90%; font-size:13px;
+.stats {
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;margin:14px 0;
 }
-footer { text-align:center; color:#59655b; font-size:11px; padding:20px; }
-@media(min-width:600px) {
-  main { padding-top:30px; }
-  h1 { font-size:42px; }
+.stat {
+  background:#141b15;border:1px solid var(--border);
+  border-radius:12px;padding:14px;
 }
+.number { font-size:29px;font-weight:900;color:var(--green); }
+button.action {
+  background:var(--green);color:#10140c;
+  border:0;border-radius:9px;padding:13px;
+  font-weight:800;width:100%;margin:5px 0;cursor:pointer;
+}
+button.secondary {
+  background:#202a21;color:white;
+  border:1px solid var(--border);
+}
+button:disabled { opacity:.45; }
+input {
+  width:100%;padding:13px;margin:6px 0;
+  background:#090e0a;color:white;
+  border:1px solid var(--border);border-radius:8px;
+}
+#cameraWrap {
+  position:relative;background:#000;border-radius:12px;
+  overflow:hidden;min-height:180px;
+}
+#video {
+  display:block;width:100%;height:auto;
+  transform:scaleX(-1);
+}
+#overlay {
+  position:absolute;inset:0;width:100%;height:100%;
+  transform:scaleX(-1);pointer-events:none;
+}
+.cameraStatus {
+  padding:10px;background:#192019;color:var(--green);
+  border-radius:8px;margin:10px 0;font-size:13px;
+}
+#repBig { font-size:68px;font-weight:900;color:var(--green); }
+.hidden { display:none!important; }
+footer { text-align:center;padding:25px;color:var(--muted);font-size:12px; }
 </style>
 </head>
 
 <body>
 <header>
-  <div class="logo">PUSH UPS <span>PvP.</span></div>
-  <div class="status">● ONLINE READY</div>
+  <div class="logo">PUSH UPS <span>PvP</span></div>
+  <p>YOUR REPS. YOUR RECORD. YOUR RIVAL.</p>
 </header>
 
-<main>
-  <section id="home">
-    <div class="hero card">
-      <div class="eyebrow">Your next rep matters</div>
-      <h1>BUILT BY<br>REPS. <span class="green">PROVEN</span><br>BY BATTLES.</h1>
-      <p>Train consistently. Challenge your friends. Climb the ranks.</p>
-      <button class="btn" onclick="show('training')">START TRAINING ↗</button>
-      <button class="btn secondary" onclick="show('pvp')">ENTER PvP ARENA</button>
-    </div>
-
-    <div class="grid">
-      <div class="stat"><strong id="homeTotal">0</strong><small>Total push-ups</small></div>
-      <div class="stat"><strong id="homeBest">0</strong><small>Best set</small></div>
-      <div class="stat"><strong id="homeXP">0</strong><small>XP earned</small></div>
-      <div class="stat"><strong id="homeSessions">0</strong><small>Sessions</small></div>
-    </div>
-
-    <div class="card">
-      <div class="eyebrow">Daily grind</div>
-      <h2>One more rep.</h2>
-      <p>Your progress is saved on this device automatically.</p>
-      <button class="btn secondary" onclick="show('leaderboard')">VIEW LEADERBOARD</button>
-    </div>
-  </section>
-
-  <section id="training" class="hidden">
-    <div class="eyebrow">Training mode / 01</div>
-    <h1>GET YOUR REPS IN.</h1>
-    <p>Count each completed push-up. Keep your form controlled.</p>
-
-    <div class="card">
-      <div class="center eyebrow">CURRENT SET</div>
-      <div class="counter" id="count">0</div>
-      <button class="btn" onclick="addRep()">+1 PUSH-UP</button>
-      <div class="row">
-        <button class="btn secondary" onclick="subtractRep()">−1</button>
-        <button class="btn secondary" onclick="resetCount()">RESET SET</button>
-      </div>
-      <button class="btn secondary" onclick="finishSession()">FINISH SESSION</button>
-    </div>
-
-    <div class="grid">
-      <div class="stat"><strong id="total">0</strong><small>Total reps</small></div>
-      <div class="stat"><strong id="xp">0</strong><small>XP</small></div>
-      <div class="stat"><strong id="best">0 reps</strong><small>Best set</small></div>
-      <div class="stat"><strong id="sessions">0</strong><small>Sessions</small></div>
-    </div>
-    <p class="notice">Counter saves locally on this device. Online score syncing is not enabled yet.</p>
-  </section>
-
-  <section id="pvp" class="hidden">
-    <div class="eyebrow">Competitive arena / 02</div>
-    <h1>CHALLENGE<br>YOUR LIMITS.</h1>
-    <p>Online matchmaking is the next build stage. These demo rooms are not real multiplayer rooms yet.</p>
-
-    <div class="card">
-      <div class="eyebrow">Quick match</div>
-      <h2>Ready to compete?</h2>
-      <p>Real matches will need synchronized rooms and server-validated scores.</p>
-      <button class="btn" onclick="demoRoom()">GENERATE DEMO ROOM</button>
-      <div id="roomMessage" class="center" style="margin-top:15px"></div>
-    </div>
-
-    <div class="card">
-      <div class="eyebrow">Coming next</div>
-      <div class="list-item"><span>🌍 Worldwide matchmaking</span><span class="pill">NEXT</span></div>
-      <div class="list-item"><span>🔐 Player accounts</span><span class="pill">SETUP</span></div>
-      <div class="list-item"><span>⚔️ Live match scores</span><span class="pill">NEXT</span></div>
-    </div>
-  </section>
-
-  <section id="leaderboard" class="hidden">
-    <div class="eyebrow">Global rankings / 03</div>
-    <h1>THE LEADERBOARD.</h1>
-    <p>Player profiles registered in the database. Competitive scores will appear after secure score syncing is implemented.</p>
-    <div class="card">
-      <div class="row" style="align-items:center">
-        <h2 style="flex:1">Players</h2>
-        <button class="btn secondary" style="width:auto;margin:0" onclick="loadProfiles()">REFRESH</button>
-      </div>
-      <div id="profilesList"><p>Sign in and refresh to load profiles.</p></div>
-      <p class="notice">A profile list is not yet a ranked score leaderboard.</p>
-    </div>
-  </section>
-
-  <section id="account" class="hidden">
-    <div class="eyebrow">Player identity / 04</div>
-    <h1>PLAYER ACCOUNT.</h1>
-    <div class="card">
-      <div id="accountStatus" class="notice">Checking account status…</div>
-
-      <div id="authForms">
-        <h2>Create account</h2>
-        <p>Use an email address you can access. Never share your password.</p>
-        <form id="signupForm">
-          <label for="signupName">Username</label>
-          <input id="signupName" required minlength="3" maxlength="20"
-                 autocomplete="username" placeholder="Your player name">
-          <label for="signupEmail">Email</label>
-          <input id="signupEmail" type="email" required autocomplete="email"
-                 placeholder="you@example.com">
-          <label for="signupPassword">Password</label>
-          <input id="signupPassword" type="password" required minlength="8"
-                 autocomplete="new-password" placeholder="At least 8 characters">
-          <button class="btn" type="submit">CREATE ACCOUNT</button>
-        </form>
-
-        <div style="height:20px"></div>
-        <h2>Already registered?</h2>
-        <form id="loginForm">
-          <label for="loginEmail">Email</label>
-          <input id="loginEmail" type="email" required autocomplete="email"
-                 placeholder="you@example.com">
-          <label for="loginPassword">Password</label>
-          <input id="loginPassword" type="password" required
-                 autocomplete="current-password" placeholder="Your password">
-          <button class="btn secondary" type="submit">SIGN IN</button>
-        </form>
-      </div>
-
-      <button id="logoutButton" class="btn danger" style="display:none"
-              onclick="logout()">SIGN OUT</button>
-    </div>
-    <p class="notice">Use only your own account. Profile creation requires the database security policies to allow it.</p>
-  </section>
-</main>
-
 <nav>
-  <button data-page="home" class="active" onclick="show('home')">⌂<br>HOME</button>
-  <button data-page="training" onclick="show('training')">＋<br>TRAIN</button>
-  <button data-page="pvp" onclick="show('pvp')">⚔<br>PvP</button>
-  <button data-page="leaderboard" onclick="show('leaderboard')">♜<br>RANKS</button>
-  <button data-page="account" onclick="show('account')">◎<br>ACCOUNT</button>
+  <button class="active" data-page="home">Home</button>
+  <button data-page="training">Train</button>
+  <button data-page="pvp">PvP</button>
+  <button data-page="leaderboard">Ranks</button>
+  <button data-page="account">Account</button>
 </nav>
 
-<div id="toast" role="status"></div>
-<footer>PUSH UPS PvP · TRAIN SMART · COMPETE FAIR</footer>
+<main>
+<section id="home" class="active">
+  <h1>Earn every rep.</h1>
+  <p class="muted">No preset rep target. Your valid reps build your score.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="muted">TOTAL REPS</div><div id="homeTotal" class="number">0</div></div>
+    <div class="stat"><div class="muted">BEST SESSION</div><div id="homeBest" class="number">0</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>Ready to train?</h2>
+    <p class="muted">Place your phone securely at your side so your whole body is visible. Use a stable surface and good lighting.</p>
+    <button class="action" onclick="showPage('training')">OPEN AI COUNTER →</button>
+  </div>
+
+  <div class="panel">
+    <h2>How scoring works</h2>
+    <p>1. Start the camera.</p>
+    <p>2. Reach the top position, lower yourself, then return to the top.</p>
+    <p>3. The prototype counts a detected full movement cycle.</p>
+    <p class="muted">Pose detection is an estimate, not a perfect judge of exercise form.</p>
+  </div>
+</section>
+
+<section id="training">
+  <h1>AI Training</h1>
+  <p class="muted">Camera-based push-up counter · prototype v1</p>
+
+  <div class="panel">
+    <div id="cameraWrap">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+    </div>
+    <div class="cameraStatus" id="status">Camera is off.</div>
+
+    <div style="text-align:center">
+      <div id="repBig">0</div>
+      <div class="muted">VALID DETECTED REPS</div>
+    </div>
+
+    <button id="startBtn" class="action" onclick="startCamera()">START CAMERA</button>
+    <button id="stopBtn" class="action secondary" onclick="stopCamera()" disabled>STOP CAMERA</button>
+    <button class="action secondary" onclick="resetSession()">RESET SESSION</button>
+    <button class="action" onclick="finishSession()">FINISH & SAVE SCORE</button>
+  </div>
+
+  <div class="panel">
+    <h2>Setup checklist</h2>
+    <p>• Film from the side, with shoulders, hips, knees and ankles visible.</p>
+    <p>• Keep the phone steady and the space around you clear.</p>
+    <p>• The first full extension establishes the starting position.</p>
+    <p class="muted">This early prototype uses elbow angle and a rough body-alignment check. It may miss reps or count incorrectly. Review your form yourself, and stop if you feel pain or dizziness.</p>
+  </div>
+</section>
+
+<section id="pvp">
+  <h1>Player vs Player</h1>
+  <div class="panel">
+    <h2>Online battles are coming</h2>
+    <p class="muted">The camera counter comes first. Real-time rooms, opponent synchronization and verified scores are not implemented yet.</p>
+    <button class="action" onclick="showPage('training')">PRACTICE NOW</button>
+  </div>
+</section>
+
+<section id="leaderboard">
+  <h1>Leaderboard</h1>
+  <div class="panel">
+    <p class="muted">Local record on this device</p>
+    <div class="stats">
+      <div class="stat"><div class="muted">TOTAL REPS</div><div class="number" id="rankTotal">0</div></div>
+      <div class="stat"><div class="muted">BEST SESSION</div><div class="number" id="rankBest">0</div></div>
+    </div>
+    <p class="muted">This is not yet a worldwide leaderboard.</p>
+  </div>
+</section>
+
+<section id="account">
+  <h1>Account</h1>
+  <div class="panel">
+    <p id="authStatus" class="muted">Not signed in.</p>
+    <input id="email" type="email" placeholder="Email address" autocomplete="email">
+    <input id="password" type="password" placeholder="Password (minimum 6 characters)" autocomplete="current-password">
+    <input id="username" type="text" placeholder="Username (3–20 characters)" maxlength="20">
+    <button class="action" onclick="signUp()">CREATE ACCOUNT</button>
+    <button class="action secondary" onclick="signIn()">SIGN IN</button>
+    <button class="action secondary" onclick="signOut()">SIGN OUT</button>
+    <p id="authMessage" class="muted"></p>
+  </div>
+  <p class="muted">Never share your password or Supabase secret/service-role key.</p>
+</section>
+</main>
+
+<footer>BUILT TO BEAT YOUR PERSONAL BEST.</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
+
 <script>
-"use strict";
-
-/* Supabase public connection details */
+// Supabase public project configuration
 const SUPABASE_URL = "https://fyonthacrbhwtsngfwcx.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_Jv6ytXHc5sOuf9c5x3qR-Q_MuyhYi83";
+const SUPABASE_KEY = "sb_publishable_Jv6ytXHc5sOuf9c5x3qR-Q_MuyhYi83";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let pvpSupabase = null;
+const $ = id => document.getElementById(id);
+
+let reps = 0;
+let total = Number(localStorage.getItem("pvp_total") || 0);
+let best = Number(localStorage.getItem("pvp_best") || 0);
+let stream = null;
+let pose = null;
+let animationId = null;
+let processing = false;
+let lastProcessed = 0;
+let phase = "waiting";
+let lastCountAt = 0;
 let currentUser = null;
-let toastTimer = null;
 
-/* Restore saved training progress */
-const defaultState = {
-  count: 0, total: 0, xp: 0, best: 0, sessions: 0
-};
-
-function readState() {
-  try {
-    const saved = JSON.parse(localStorage.getItem("pvp_training_v1") || "{}");
-    return {
-      count: Math.max(0, Number(saved.count) || 0),
-      total: Math.max(0, Number(saved.total) || 0),
-      xp: Math.max(0, Number(saved.xp) || 0),
-      best: Math.max(0, Number(saved.best) || 0),
-      sessions: Math.max(0, Number(saved.sessions) || 0)
-    };
-  } catch (_) {
-    return { ...defaultState };
-  }
-}
-
-let state = readState();
-let count = state.count;
-let total = state.total;
-let xp = state.xp;
-let best = state.best;
-let sessions = state.sessions;
-
-function saveState() {
-  state = { count, total, xp, best, sessions };
-  try {
-    localStorage.setItem("pvp_training_v1", JSON.stringify(state));
-  } catch (_) {
-    toast("Could not save progress on this device.");
-  }
-  renderStats();
-}
-
-function renderStats() {
-  const values = {
-    count, total, xp, best: best + " reps", sessions,
-    homeTotal: total, homeBest: best, homeXP: xp,
-    homeSessions: sessions
-  };
-  Object.entries(values).forEach(([id, value]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value;
+function showPage(page) {
+  document.querySelectorAll("main section").forEach(s => s.classList.remove("active"));
+  $(page).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b => {
+    b.classList.toggle("active", b.dataset.page === page);
   });
-}
-
-function toast(message) {
-  const el = document.getElementById("toast");
-  el.textContent = message;
-  el.style.display = "block";
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { el.style.display = "none"; }, 2800);
-}
-
-function show(page) {
-  document.querySelectorAll("main section").forEach(section =>
-    section.classList.add("hidden"));
-  const target = document.getElementById(page);
-  if (target) target.classList.remove("hidden");
-
-  document.querySelectorAll("nav button").forEach(button =>
-    button.classList.toggle("active", button.dataset.page === page));
-
-  if (page === "leaderboard") loadProfiles();
-  if (page === "account") refreshAccount();
   window.scrollTo(0, 0);
 }
 
-function addRep() {
-  count++;
-  total++;
-  xp += 10;
-  best = Math.max(best, count);
-  saveState();
+document.querySelectorAll("nav button").forEach(b =>
+  b.addEventListener("click", () => showPage(b.dataset.page))
+);
+
+function updateStats() {
+  $("homeTotal").textContent = total;
+  $("rankTotal").textContent = total;
+  $("homeBest").textContent = best;
+  $("rankBest").textContent = best;
+  $("repBig").textContent = reps;
+  localStorage.setItem("pvp_total", total);
+  localStorage.setItem("pvp_best", best);
+}
+updateStats();
+
+// Calculate an angle ABC, with B as the joint.
+function angle(a, b, c) {
+  const radians = Math.atan2(c.y-b.y, c.x-b.x) -
+                  Math.atan2(a.y-b.y, a.x-b.x);
+  let degrees = Math.abs(radians * 180 / Math.PI);
+  if (degrees > 180) degrees = 360 - degrees;
+  return degrees;
 }
 
-function subtractRep() {
-  if (count <= 0) return;
-  count--;
-  total = Math.max(0, total - 1);
-  xp = Math.max(0, xp - 10);
-  saveState();
+function visible(lm, ids) {
+  return ids.every(i => lm[i] && (lm[i].visibility ?? 1) > 0.55);
 }
 
-function resetCount() {
-  count = 0;
-  saveState();
-  toast("Set reset. Your lifetime total is preserved.");
-}
+function drawPose(results) {
+  const canvas = $("overlay");
+  const video = $("video");
+  const ctx = canvas.getContext("2d");
 
-function finishSession() {
-  if (count === 0) {
-    toast("Complete at least one rep first.");
-    return;
+  if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
   }
-  sessions++;
-  const finishedReps = count;
-  count = 0;
-  saveState();
-  toast("Session saved locally: " + finishedReps + " reps.");
-}
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-function demoRoom() {
-  const code = Math.random().toString(36).slice(2, 8).toUpperCase();
-  document.getElementById("roomMessage").textContent =
-    "DEMO CODE: " + code + " — local preview only, not joinable online.";
-}
-
-/* Authentication and profile access */
-function initSupabase() {
-  if (!window.supabase || !window.supabase.createClient) {
-    document.getElementById("accountStatus").textContent =
-      "Could not load the Supabase client. Check your internet connection.";
+  const lm = results.poseLandmarks;
+  if (!lm) {
+    $("status").textContent = "Body not detected. Move back so your whole body is visible.";
     return;
   }
 
-  pvpSupabase = window.supabase.createClient(
-    SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY
-  );
+  // MediaPipe pose landmarks:
+  // shoulder 11, elbow 13, wrist 15, hip 23, knee 25, ankle 27
+  const ids = [11,13,15,23,25,27];
+  if (!visible(lm, ids)) {
+    $("status").textContent = "Body partly hidden. Show your whole side profile.";
+    return;
+  }
 
-  pvpSupabase.auth.onAuthStateChange((_event, session) => {
-    currentUser = session ? session.user : null;
-    setTimeout(() => refreshAccount(), 0);
+  // Draw a simple skeleton guide.
+  const links = [[11,13],[13,15],[11,23],[23,25],[25,27]];
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = "#b7ff32";
+  links.forEach(([a,b]) => {
+    ctx.beginPath();
+    ctx.moveTo(lm[a].x*canvas.width,lm[a].y*canvas.height);
+    ctx.lineTo(lm[b].x*canvas.width,lm[b].y*canvas.height);
+    ctx.stroke();
   });
 
-  pvpSupabase.auth.getSession().then(({ data, error }) => {
-    if (error) {
-      toast("Could not check sign-in status.");
-      return;
-    }
-    currentUser = data.session ? data.session.user : null;
-    refreshAccount();
+  ids.forEach(i => {
+    ctx.beginPath();
+    ctx.arc(lm[i].x*canvas.width,lm[i].y*canvas.height,5,0,Math.PI*2);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
   });
-}
 
-async function createProfile(user, username) {
-  if (!pvpSupabase || !user) return;
+  const elbow = angle(lm[11], lm[13], lm[15]);
+  const body = angle(lm[11], lm[23], lm[27]);
+  const now = Date.now();
 
-  const cleanName = String(username || "").trim();
-  if (cleanName.length < 3 || cleanName.length > 20) return;
-
-  const { error } = await pvpSupabase
-    .from("profiles")
-    .upsert({ id: user.id, username: cleanName }, { onConflict: "id" });
-
-  if (error) {
-    console.error("Profile creation failed:", error.message);
-    toast("Signed in, but profile setup failed. Check database policies.");
-  } else {
-    localStorage.setItem("pvp_username", cleanName);
-    toast("Player profile ready!");
-    loadProfiles();
-  }
-}
-
-async function refreshAccount() {
-  const status = document.getElementById("accountStatus");
-  const forms = document.getElementById("authForms");
-  const logoutButton = document.getElementById("logoutButton");
-  if (!status) return;
-
-  if (!pvpSupabase) {
-    status.textContent = "Connecting to Supabase…";
+  // These thresholds are only initial estimates; camera angle and body shape vary.
+  if (body < 145) {
+    $("status").textContent = "Body alignment uncertain — straighten your body and reposition the camera.";
     return;
   }
 
-  if (!currentUser) {
-    status.textContent = "Not signed in.";
-    forms.style.display = "block";
-    logoutButton.style.display = "none";
-    return;
-  }
-
-  status.textContent = "Signed in as " + (currentUser.email || "player");
-  forms.style.display = "none";
-  logoutButton.style.display = "block";
-}
-
-document.getElementById("signupForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!pvpSupabase) return toast("Supabase is not connected.");
-
-  const username = document.getElementById("signupName").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const password = document.getElementById("signupPassword").value;
-
-  if (username.length < 3 || username.length > 20) {
-    return toast("Username must be 3–20 characters.");
-  }
-
-  const button = event.submitter;
-  button.disabled = true;
-  button.textContent = "CREATING…";
-
-  try {
-    const { data, error } = await pvpSupabase.auth.signUp({
-      email, password,
-      options: { data: { username } }
-    });
-    if (error) throw error;
-
-    localStorage.setItem("pvp_username", username);
-
-    if (data.user && data.session) {
-      await createProfile(data.user, username);
+  if (elbow > 150) {
+    if (phase === "bottom" && now - lastCountAt > 700) {
+      reps++;
+      total++;
+      best = Math.max(best, reps);
+      lastCountAt = now;
+      updateStats();
+      $("status").textContent = "REP COUNTED ✓  Back at the top.";
+      phase = "top";
+    } else if (phase === "waiting") {
+      phase = "top";
+      $("status").textContent = "Top position detected. Lower under control.";
     } else {
-      toast("Account request sent. Check your email if confirmation is required.");
+      $("status").textContent = "Top position detected.";
     }
-  } catch (error) {
-    toast(error.message || "Sign-up failed.");
-  } finally {
-    button.disabled = false;
-    button.textContent = "CREATE ACCOUNT";
+  } else if (elbow < 95) {
+    if (phase === "top") {
+      phase = "bottom";
+      $("status").textContent = "Bottom position detected. Push back up.";
+    } else if (phase === "waiting") {
+      $("status").textContent = "Reach the top position to begin.";
+    } else {
+      $("status").textContent = "Bottom position detected.";
+    }
+  } else {
+    $("status").textContent = "Movement detected. Complete the full range.";
   }
-});
+}
 
-document.getElementById("loginForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!pvpSupabase) return toast("Supabase is not connected.");
-
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
-  const button = event.submitter;
-  button.disabled = true;
-  button.textContent = "SIGNING IN…";
+async function startCamera() {
+  if (stream) return;
+  $("startBtn").disabled = true;
+  $("status").textContent = "Requesting camera permission…";
 
   try {
-    const { data, error } = await pvpSupabase.auth.signInWithPassword({
-      email, password
+    if (!window.isSecureContext) {
+      throw new Error("Open this site over HTTPS in Chrome.");
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error("Camera access isn't supported in this browser.");
+    }
+    if (typeof Pose === "undefined") {
+      throw new Error("Pose model did not load. Check your internet and reload.");
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }
     });
-    if (error) throw error;
 
-    currentUser = data.user;
-    refreshAccount();
-    toast("Signed in successfully.");
-    loadProfiles();
-  } catch (error) {
-    toast(error.message || "Sign-in failed.");
-  } finally {
-    button.disabled = false;
-    button.textContent = "SIGN IN";
+    $("video").srcObject = stream;
+    await $("video").play();
+
+    pose = new Pose({
+      locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
+    });
+    pose.setOptions({
+      modelComplexity: 1,
+      smoothLandmarks: true,
+      enableSegmentation: false,
+      minDetectionConfidence: 0.6,
+      minTrackingConfidence: 0.6
+    });
+    pose.onResults(drawPose);
+
+    phase = "waiting";
+    lastProcessed = 0;
+    processing = false;
+    $("stopBtn").disabled = false;
+    $("status").textContent = "Camera on. Show your full body from the side.";
+
+    async function loop(timestamp) {
+      if (!stream) return;
+      if (!processing && timestamp - lastProcessed > 100) {
+        processing = true;
+        lastProcessed = timestamp;
+        try {
+          if ($("video").readyState >= 2) await pose.send({image:$("video")});
+        } catch (e) {
+          $("status").textContent = "Pose tracking hiccup. Keep the camera steady.";
+        }
+        processing = false;
+      }
+      if (stream) animationId = requestAnimationFrame(loop);
+    }
+    animationId = requestAnimationFrame(loop);
+
+  } catch (e) {
+    $("status").textContent = e.message || "Couldn't start camera.";
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    stream = null;
+    $("startBtn").disabled = false;
   }
-});
-
-async function logout() {
-  if (!pvpSupabase) return;
-  const { error } = await pvpSupabase.auth.signOut();
-  if (error) return toast("Sign-out failed.");
-  currentUser = null;
-  refreshAccount();
-  toast("Signed out.");
 }
 
-async function loadProfiles() {
-  const list = document.getElementById("profilesList");
-  if (!list) return;
+function stopCamera() {
+  if (animationId) cancelAnimationFrame(animationId);
+  animationId = null;
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  stream = null;
+  processing = false;
+  $("video").srcObject = null;
+  $("overlay").getContext("2d").clearRect(0,0,$("overlay").width,$("overlay").height);
+  $("startBtn").disabled = false;
+  $("stopBtn").disabled = true;
+  $("status").textContent = "Camera stopped.";
+}
 
-  if (!pvpSupabase) {
-    list.innerHTML = "<p>Supabase is not connected.</p>";
+function resetSession() {
+  reps = 0;
+  phase = "waiting";
+  lastCountAt = 0;
+  updateStats();
+  $("status").textContent = stream ? "Session reset. Reach the top position to begin." : "Session reset. Start the camera when ready.";
+}
+
+async function finishSession() {
+  stopCamera();
+  if (reps === 0) {
+    $("status").textContent = "No reps recorded in this session.";
+    return;
+  }
+  $("status").textContent = `Session saved on this device: ${reps} detected reps.`;
+  // Scores are stored locally only. Server-verified PvP saving is not implemented.
+  alert(`Session complete: ${reps} detected reps. Total: ${total}.`);
+}
+
+// Account support
+async function signUp() {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  const username = $("username").value.trim();
+
+  if (!email || password.length < 6 || username.length < 3 || username.length > 20) {
+    $("authMessage").textContent = "Enter an email, password of at least 6 characters, and username of 3–20 characters.";
     return;
   }
 
-  list.innerHTML = "<p>Loading player profiles…</p>";
-
-  const { data, error } = await pvpSupabase
-    .from("profiles")
-    .select("username")
-    .order("username", { ascending: true })
-    .limit(50);
+  $("authMessage").textContent = "Creating account…";
+  const {data,error} = await db.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { username },
+      emailRedirectTo: "https://dyukeshkumar007-sketch.github.io/push-ups-pvp-app-v0/"
+    }
+  });
 
   if (error) {
-    console.error("Profile list error:", error.message);
-    list.innerHTML = "<p>Could not load profiles. Check your database policies and connection.</p>";
+    $("authMessage").textContent = error.message;
     return;
   }
 
-  if (!data || data.length === 0) {
-    list.innerHTML = "<p>No player profiles yet. Create an account to appear here.</p>";
-    return;
+  if (data.session) {
+    currentUser = data.user;
+    await ensureProfile(username);
+    $("authMessage").textContent = "Account created and signed in.";
+  } else {
+    $("authMessage").textContent = "Check your email to verify your account, then return here and sign in.";
   }
-
-  list.replaceChildren();
-  data.forEach((profile, index) => {
-    const row = document.createElement("div");
-    row.className = "list-item";
-
-    const name = document.createElement("span");
-    name.textContent = (index + 1) + ".  " + profile.username;
-
-    const badge = document.createElement("span");
-    badge.className = "pill";
-    badge.textContent = "PLAYER";
-
-    row.append(name, badge);
-    list.appendChild(row);
-  });
 }
 
-/* Restore the UI and connect */
-renderStats();
-initSupabase();
+async function signIn() {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  $("authMessage").textContent = "Signing in…";
+
+  const {data,error} = await db.auth.signInWithPassword({email,password});
+  if (error) {
+    $("authMessage").textContent = error.message;
+    return;
+  }
+  currentUser = data.user;
+  await ensureProfile($("username").value.trim() || data.user.user_metadata?.username || "player");
+  $("authStatus").textContent = "Signed in as " + (data.user.email || "player");
+  $("authMessage").textContent = "Signed in successfully.";
+}
+
+async function ensureProfile(username) {
+  if (!currentUser) return;
+  // A profile may already exist. Do not overwrite an existing username on sign-in.
+  const {data:existing} = await db.from("profiles")
+    .select("id,username").eq("id",currentUser.id).maybeSingle();
+
+  if (existing) return;
+
+  const cleanName = (username || "player").replace(/[^a-zA-Z0-9_]/g,"").slice(0,20);
+  const {error} = await db.from("profiles").insert({
+    id:currentUser.id,
+    username:cleanName.length >= 3 ? cleanName : "player" + currentUser.id.slice(0,6)
+  });
+
+  if (error) $("authMessage").textContent = "Signed in, but profile setup needs attention: " + error.message;
+}
+
+async function signOut() {
+  const {error} = await db.auth.signOut();
+  currentUser = null;
+  $("authStatus").textContent = "Not signed in.";
+  $("authMessage").textContent = error ? error.message : "Signed out.";
+}
+
+db.auth.getSession().then(async ({data}) => {
+  currentUser = data.session?.user || null;
+  if (currentUser) {
+    $("authStatus").textContent = "Signed in as " + (currentUser.email || "player");
+  }
+});
 </script>
 </body>
 </html>
+
