@@ -1,212 +1,589 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b0a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b09">
 <title>Push Ups PvP</title>
+
 <style>
 :root {
-  --bg:#080b0a; --panel:#111713; --green:#b7ff39;
-  --muted:#879487; --line:#253127;
+  --bg:#080b09;
+  --panel:#111713;
+  --green:#71ff8b;
+  --muted:#8c9a8e;
+  --border:#26352a;
+  --red:#ff6262;
 }
 * { box-sizing:border-box; }
 body {
-  margin:0; background:var(--bg); color:#f3f7f2;
-  font-family:system-ui,Arial,sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:#f2fff4;
+  font-family:system-ui,-apple-system,sans-serif;
 }
+button,input { font:inherit; }
+button { cursor:pointer; }
 header {
-  padding:22px 20px 14px; display:flex;
-  justify-content:space-between; align-items:center;
+  padding:20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
 }
-.logo { font-weight:900; letter-spacing:-1px; font-size:21px; }
+.logo { font-weight:900; font-size:19px; letter-spacing:-.7px; }
 .logo span { color:var(--green); }
-.level {
-  color:var(--green); border:1px solid #476522;
-  padding:7px 10px; border-radius:9px; font-size:12px;
+.status { color:var(--green); font-size:11px; }
+main { max-width:720px; margin:auto; padding:20px 16px 100px; }
+section.hidden { display:none; }
+h1 { font-size:34px; line-height:1.1; margin:12px 0; letter-spacing:-1.5px; }
+h2 { font-size:22px; margin-top:8px; }
+p { color:var(--muted); line-height:1.6; }
+.eyebrow {
+  color:var(--green); font-size:11px; font-weight:800;
+  letter-spacing:2px; text-transform:uppercase;
 }
-main { padding:10px 18px 105px; max-width:540px; margin:auto; }
-.eyebrow { color:var(--green); font-size:11px;
-  font-weight:800; letter-spacing:2px; }
-h1 { font-size:31px; line-height:1.1; margin:10px 0; }
-p { color:var(--muted); line-height:1.5; }
-.panel {
-  background:var(--panel); border:1px solid var(--line);
-  border-radius:18px; padding:18px; margin:16px 0;
+.card {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:18px; padding:20px; margin:16px 0;
 }
-.stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.stat { background:#0c100d; padding:15px; border-radius:12px; }
-.number { font-size:26px; font-weight:850; margin-top:5px; }
-.muted { color:var(--muted); font-size:12px; }
-button {
-  border:0; border-radius:11px; padding:14px;
-  font-weight:800; font-size:14px; cursor:pointer;
+.hero {
+  background:radial-gradient(ellipse at top right,#173921 0%,#111713 48%,#111713 100%);
+  border-color:#31543a;
+  padding:25px;
 }
-.primary { background:var(--green); color:#10150b; width:100%; }
-.secondary { background:#202920; color:white; width:100%;
-  border:1px solid #344233; }
-.buttons { display:grid; gap:10px; margin-top:16px; }
-.section-title { font-size:18px; font-weight:800; margin:24px 0 8px; }
-.match { display:flex; align-items:center; gap:12px; }
-.avatar {
-  width:43px; height:43px; display:grid; place-items:center;
-  border-radius:12px; background:#253321; font-size:20px;
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.stat {
+  background:#0a100c; border:1px solid var(--border);
+  border-radius:13px; padding:14px;
 }
-.match-info { flex:1; }
-.tag { color:var(--green); font-size:11px; font-weight:800; }
+.stat strong { display:block; font-size:25px; color:var(--green); }
+.stat small { color:var(--muted); }
+.btn {
+  width:100%; padding:14px; border:0; border-radius:11px;
+  font-weight:800; margin-top:10px;
+  background:var(--green); color:#071009;
+}
+.btn.secondary {
+  background:#1a251d; color:#f2fff4; border:1px solid var(--border);
+}
+.btn.danger { color:var(--red); background:#271515; }
+.btn:active { transform:scale(.99); }
+.row { display:flex; gap:10px; }
+.row > * { flex:1; min-width:0; }
+input {
+  display:block; width:100%; margin:8px 0 12px; padding:13px;
+  color:white; background:#080d09; border:1px solid var(--border);
+  border-radius:10px; outline:none;
+}
+input:focus { border-color:var(--green); }
+label { color:#b6c6b8; font-size:13px; }
+.counter {
+  font-size:86px; font-weight:900; text-align:center;
+  color:var(--green); line-height:1.2; margin:20px 0;
+  text-shadow:0 0 28px #71ff8b20;
+}
+.center { text-align:center; }
 nav {
-  position:fixed; bottom:0; left:0; right:0;
-  background:#0d120f; border-top:1px solid var(--line);
-  display:flex; justify-content:space-around;
-  padding:10px 4px max(12px,env(safe-area-inset-bottom));
+  position:fixed; bottom:0; left:0; right:0; z-index:5;
+  display:flex; justify-content:center; gap:4px;
+  background:#0c110dee; border-top:1px solid var(--border);
+  padding:9px 5px calc(9px + env(safe-area-inset-bottom));
+  backdrop-filter:blur(12px);
 }
 nav button {
-  background:transparent; color:var(--muted);
-  font-size:11px; padding:9px 12px;
+  background:transparent; color:var(--muted); border:0;
+  border-radius:10px; padding:10px 9px; font-size:11px;
+  font-weight:700; flex:1; max-width:130px;
 }
-nav button.active { color:var(--green); }
-nav span { display:block; font-size:19px; margin-bottom:4px; }
-.hidden { display:none; }
-.big-count { font-size:76px; font-weight:900; color:var(--green);
-  text-align:center; line-height:1.2; margin:25px 0 4px; }
-.center { text-align:center; }
+nav button.active { background:#1b3020; color:var(--green); }
+.notice { font-size:12px; color:var(--muted); }
+.green { color:var(--green); }
+.list-item {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 0; border-bottom:1px solid var(--border); gap:10px;
+}
+.list-item:last-child { border-bottom:0; }
+.pill {
+  border:1px solid var(--border); color:var(--green);
+  padding:5px 9px; border-radius:99px; font-size:11px;
+}
+#toast {
+  position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+  background:#213b27; border:1px solid #416c49; padding:12px 16px;
+  border-radius:10px; display:none; z-index:10;
+  width:max-content; max-width:90%; font-size:13px;
+}
+footer { text-align:center; color:#59655b; font-size:11px; padding:20px; }
+@media(min-width:600px) {
+  main { padding-top:30px; }
+  h1 { font-size:42px; }
+}
 </style>
 </head>
+
 <body>
 <header>
   <div class="logo">PUSH UPS <span>PvP.</span></div>
-  <div class="level">LVL 01 · ROOKIE</div>
+  <div class="status">● ONLINE READY</div>
 </header>
 
 <main>
   <section id="home">
-    <div class="eyebrow">YOUR ARENA. YOUR RULES.</div>
-    <h1>READY TO<br>GET STRONGER?</h1>
-    <p>Every rep counts. Every challenge matters.</p>
-
-    <div class="panel">
-      <div class="eyebrow">YOUR PROGRESS</div>
-      <div class="stats" style="margin-top:14px">
-        <div class="stat"><div class="muted">TOTAL REPS</div>
-          <div class="number" id="total">0</div></div>
-        <div class="stat"><div class="muted">YOUR XP</div>
-          <div class="number" id="xp">0</div></div>
-      </div>
-      <div class="muted" style="margin-top:13px">TRAIN TODAY. LEVEL UP TOMORROW.</div>
+    <div class="hero card">
+      <div class="eyebrow">Your next rep matters</div>
+      <h1>BUILT BY<br>REPS. <span class="green">PROVEN</span><br>BY BATTLES.</h1>
+      <p>Train consistently. Challenge your friends. Climb the ranks.</p>
+      <button class="btn" onclick="show('training')">START TRAINING ↗</button>
+      <button class="btn secondary" onclick="show('pvp')">ENTER PvP ARENA</button>
     </div>
 
-    <div class="section-title">CHOOSE YOUR MODE</div>
-    <div class="panel">
-      <div class="match">
-        <div class="avatar">⚡</div>
-        <div class="match-info"><b>TRAINING MODE</b>
-          <div class="muted">Practice and beat your record</div></div>
-        <span class="tag">SOLO</span>
-      </div>
-      <div class="buttons">
-        <button class="primary" onclick="show('training')">START TRAINING →</button>
-      </div>
+    <div class="grid">
+      <div class="stat"><strong id="homeTotal">0</strong><small>Total push-ups</small></div>
+      <div class="stat"><strong id="homeBest">0</strong><small>Best set</small></div>
+      <div class="stat"><strong id="homeXP">0</strong><small>XP earned</small></div>
+      <div class="stat"><strong id="homeSessions">0</strong><small>Sessions</small></div>
     </div>
-    <div class="panel">
-      <div class="match">
-        <div class="avatar">⚔️</div>
-        <div class="match-info"><b>1V1 BATTLE</b>
-          <div class="muted">Challenge a friend</div></div>
-        <span class="tag">PVP</span>
-      </div>
-      <div class="buttons">
-        <button class="secondary" onclick="show('pvp')">ENTER THE ARENA →</button>
-      </div>
+
+    <div class="card">
+      <div class="eyebrow">Daily grind</div>
+      <h2>One more rep.</h2>
+      <p>Your progress is saved on this device automatically.</p>
+      <button class="btn secondary" onclick="show('leaderboard')">VIEW LEADERBOARD</button>
     </div>
   </section>
 
   <section id="training" class="hidden">
-    <div class="eyebrow">SOLO TRAINING</div>
-    <h1>BEAT YOUR<br>PERSONAL BEST.</h1>
-    <div class="panel center">
-      <div class="muted">PRACTICE REP COUNTER</div>
-      <div class="big-count" id="count">0</div>
-      <p>Demo counter — camera tracking is not connected yet.</p>
-      <button class="primary" onclick="addRep()">+ ADD DEMO REP</button>
-      <div style="height:10px"></div>
-      <button class="secondary" onclick="resetCount()">RESET SESSION</button>
+    <div class="eyebrow">Training mode / 01</div>
+    <h1>GET YOUR REPS IN.</h1>
+    <p>Count each completed push-up. Keep your form controlled.</p>
+
+    <div class="card">
+      <div class="center eyebrow">CURRENT SET</div>
+      <div class="counter" id="count">0</div>
+      <button class="btn" onclick="addRep()">+1 PUSH-UP</button>
+      <div class="row">
+        <button class="btn secondary" onclick="subtractRep()">−1</button>
+        <button class="btn secondary" onclick="resetCount()">RESET SET</button>
+      </div>
+      <button class="btn secondary" onclick="finishSession()">FINISH SESSION</button>
     </div>
-    <button class="secondary" onclick="show('home')">← BACK HOME</button>
+
+    <div class="grid">
+      <div class="stat"><strong id="total">0</strong><small>Total reps</small></div>
+      <div class="stat"><strong id="xp">0</strong><small>XP</small></div>
+      <div class="stat"><strong id="best">0 reps</strong><small>Best set</small></div>
+      <div class="stat"><strong id="sessions">0</strong><small>Sessions</small></div>
+    </div>
+    <p class="notice">Counter saves locally on this device. Online score syncing is not enabled yet.</p>
   </section>
 
   <section id="pvp" class="hidden">
-    <div class="eyebrow">COMPETITIVE ARENA</div>
-    <h1>PROVE YOUR<br>STRENGTH.</h1>
-    <div class="panel">
-      <div class="tag">MATCH PREVIEW</div>
-      <h2>1V1 PUSH-UP BATTLE</h2>
-      <p>Two players. Same time limit. Highest valid rep count wins.</p>
-      <div class="stats">
-        <div class="stat"><div class="muted">YOU</div><b>PLAYER 1</b></div>
-        <div class="stat"><div class="muted">OPPONENT</div><b>PLAYER 2</b></div>
-      </div>
-      <div class="buttons">
-        <button class="primary" onclick="demoRoom()">CREATE DEMO ROOM</button>
-      </div>
-      <p id="roomMessage" role="status"></p>
-      <p class="muted">Demo only: this does not connect to another player.</p>
+    <div class="eyebrow">Competitive arena / 02</div>
+    <h1>CHALLENGE<br>YOUR LIMITS.</h1>
+    <p>Online matchmaking is the next build stage. These demo rooms are not real multiplayer rooms yet.</p>
+
+    <div class="card">
+      <div class="eyebrow">Quick match</div>
+      <h2>Ready to compete?</h2>
+      <p>Real matches will need synchronized rooms and server-validated scores.</p>
+      <button class="btn" onclick="demoRoom()">GENERATE DEMO ROOM</button>
+      <div id="roomMessage" class="center" style="margin-top:15px"></div>
     </div>
-    <button class="secondary" onclick="show('home')">← BACK HOME</button>
+
+    <div class="card">
+      <div class="eyebrow">Coming next</div>
+      <div class="list-item"><span>🌍 Worldwide matchmaking</span><span class="pill">NEXT</span></div>
+      <div class="list-item"><span>🔐 Player accounts</span><span class="pill">SETUP</span></div>
+      <div class="list-item"><span>⚔️ Live match scores</span><span class="pill">NEXT</span></div>
+    </div>
   </section>
 
   <section id="leaderboard" class="hidden">
-    <div class="eyebrow">GLOBAL AMBITION</div>
-    <h1>LEADERBOARD</h1>
-    <div class="panel">
-      <div class="match"><div class="avatar">🏆</div>
-        <div class="match-info"><b>YOUR BEST</b>
-          <div class="muted">This device's demo score</div></div>
-        <b id="best">0 reps</b>
+    <div class="eyebrow">Global rankings / 03</div>
+    <h1>THE LEADERBOARD.</h1>
+    <p>Player profiles registered in the database. Competitive scores will appear after secure score syncing is implemented.</p>
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <h2 style="flex:1">Players</h2>
+        <button class="btn secondary" style="width:auto;margin:0" onclick="loadProfiles()">REFRESH</button>
       </div>
-      <p>Online rankings will be added after we build player accounts and a backend.</p>
+      <div id="profilesList"><p>Sign in and refresh to load profiles.</p></div>
+      <p class="notice">A profile list is not yet a ranked score leaderboard.</p>
     </div>
-    <button class="secondary" onclick="show('home')">← BACK HOME</button>
+  </section>
+
+  <section id="account" class="hidden">
+    <div class="eyebrow">Player identity / 04</div>
+    <h1>PLAYER ACCOUNT.</h1>
+    <div class="card">
+      <div id="accountStatus" class="notice">Checking account status…</div>
+
+      <div id="authForms">
+        <h2>Create account</h2>
+        <p>Use an email address you can access. Never share your password.</p>
+        <form id="signupForm">
+          <label for="signupName">Username</label>
+          <input id="signupName" required minlength="3" maxlength="20"
+                 autocomplete="username" placeholder="Your player name">
+          <label for="signupEmail">Email</label>
+          <input id="signupEmail" type="email" required autocomplete="email"
+                 placeholder="you@example.com">
+          <label for="signupPassword">Password</label>
+          <input id="signupPassword" type="password" required minlength="8"
+                 autocomplete="new-password" placeholder="At least 8 characters">
+          <button class="btn" type="submit">CREATE ACCOUNT</button>
+        </form>
+
+        <div style="height:20px"></div>
+        <h2>Already registered?</h2>
+        <form id="loginForm">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" required autocomplete="email"
+                 placeholder="you@example.com">
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" required
+                 autocomplete="current-password" placeholder="Your password">
+          <button class="btn secondary" type="submit">SIGN IN</button>
+        </form>
+      </div>
+
+      <button id="logoutButton" class="btn danger" style="display:none"
+              onclick="logout()">SIGN OUT</button>
+    </div>
+    <p class="notice">Use only your own account. Profile creation requires the database security policies to allow it.</p>
   </section>
 </main>
 
 <nav>
-  <button class="active" data-page="home" onclick="show('home')"><span>⌂</span>HOME</button>
-  <button data-page="training" onclick="show('training')"><span>↗</span>TRAIN</button>
-  <button data-page="pvp" onclick="show('pvp')"><span>⚔</span>PVP</button>
-  <button data-page="leaderboard" onclick="show('leaderboard')"><span>♜</span>RANKS</button>
+  <button data-page="home" class="active" onclick="show('home')">⌂<br>HOME</button>
+  <button data-page="training" onclick="show('training')">＋<br>TRAIN</button>
+  <button data-page="pvp" onclick="show('pvp')">⚔<br>PvP</button>
+  <button data-page="leaderboard" onclick="show('leaderboard')">♜<br>RANKS</button>
+  <button data-page="account" onclick="show('account')">◎<br>ACCOUNT</button>
 </nav>
 
+<div id="toast" role="status"></div>
+<footer>PUSH UPS PvP · TRAIN SMART · COMPETE FAIR</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-let count = 0, total = 0, xp = 0, best = 0;
+"use strict";
+
+/* Supabase public connection details */
+const SUPABASE_URL = "https://fyonthacrbhwtsngfwcx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_Jv6ytXHc5sOuf9c5x3qR-Q_MuyhYi83";
+
+let pvpSupabase = null;
+let currentUser = null;
+let toastTimer = null;
+
+/* Restore saved training progress */
+const defaultState = {
+  count: 0, total: 0, xp: 0, best: 0, sessions: 0
+};
+
+function readState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("pvp_training_v1") || "{}");
+    return {
+      count: Math.max(0, Number(saved.count) || 0),
+      total: Math.max(0, Number(saved.total) || 0),
+      xp: Math.max(0, Number(saved.xp) || 0),
+      best: Math.max(0, Number(saved.best) || 0),
+      sessions: Math.max(0, Number(saved.sessions) || 0)
+    };
+  } catch (_) {
+    return { ...defaultState };
+  }
+}
+
+let state = readState();
+let count = state.count;
+let total = state.total;
+let xp = state.xp;
+let best = state.best;
+let sessions = state.sessions;
+
+function saveState() {
+  state = { count, total, xp, best, sessions };
+  try {
+    localStorage.setItem("pvp_training_v1", JSON.stringify(state));
+  } catch (_) {
+    toast("Could not save progress on this device.");
+  }
+  renderStats();
+}
+
+function renderStats() {
+  const values = {
+    count, total, xp, best: best + " reps", sessions,
+    homeTotal: total, homeBest: best, homeXP: xp,
+    homeSessions: sessions
+  };
+  Object.entries(values).forEach(([id, value]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  });
+}
+
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.style.display = "none"; }, 2800);
+}
 
 function show(page) {
-  document.querySelectorAll('main section').forEach(s =>
-    s.classList.add('hidden'));
-  document.getElementById(page).classList.remove('hidden');
-  document.querySelectorAll('nav button').forEach(b =>
-    b.classList.toggle('active', b.dataset.page === page));
+  document.querySelectorAll("main section").forEach(section =>
+    section.classList.add("hidden"));
+  const target = document.getElementById(page);
+  if (target) target.classList.remove("hidden");
+
+  document.querySelectorAll("nav button").forEach(button =>
+    button.classList.toggle("active", button.dataset.page === page));
+
+  if (page === "leaderboard") loadProfiles();
+  if (page === "account") refreshAccount();
   window.scrollTo(0, 0);
 }
+
 function addRep() {
   count++;
   total++;
   xp += 10;
   best = Math.max(best, count);
-  document.getElementById('count').textContent = count;
-  document.getElementById('total').textContent = total;
-  document.getElementById('xp').textContent = xp;
-  document.getElementById('best').textContent = best + ' reps';
+  saveState();
 }
+
+function subtractRep() {
+  if (count <= 0) return;
+  count--;
+  total = Math.max(0, total - 1);
+  xp = Math.max(0, xp - 10);
+  saveState();
+}
+
 function resetCount() {
   count = 0;
-  document.getElementById('count').textContent = count;
+  saveState();
+  toast("Set reset. Your lifetime total is preserved.");
 }
+
+function finishSession() {
+  if (count === 0) {
+    toast("Complete at least one rep first.");
+    return;
+  }
+  sessions++;
+  const finishedReps = count;
+  count = 0;
+  saveState();
+  toast("Session saved locally: " + finishedReps + " reps.");
+}
+
 function demoRoom() {
   const code = Math.random().toString(36).slice(2, 8).toUpperCase();
-  document.getElementById('roomMessage').textContent =
-    'DEMO ROOM CODE: ' + code + ' — local preview only.';
+  document.getElementById("roomMessage").textContent =
+    "DEMO CODE: " + code + " — local preview only, not joinable online.";
 }
+
+/* Authentication and profile access */
+function initSupabase() {
+  if (!window.supabase || !window.supabase.createClient) {
+    document.getElementById("accountStatus").textContent =
+      "Could not load the Supabase client. Check your internet connection.";
+    return;
+  }
+
+  pvpSupabase = window.supabase.createClient(
+    SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY
+  );
+
+  pvpSupabase.auth.onAuthStateChange((_event, session) => {
+    currentUser = session ? session.user : null;
+    setTimeout(() => refreshAccount(), 0);
+  });
+
+  pvpSupabase.auth.getSession().then(({ data, error }) => {
+    if (error) {
+      toast("Could not check sign-in status.");
+      return;
+    }
+    currentUser = data.session ? data.session.user : null;
+    refreshAccount();
+  });
+}
+
+async function createProfile(user, username) {
+  if (!pvpSupabase || !user) return;
+
+  const cleanName = String(username || "").trim();
+  if (cleanName.length < 3 || cleanName.length > 20) return;
+
+  const { error } = await pvpSupabase
+    .from("profiles")
+    .upsert({ id: user.id, username: cleanName }, { onConflict: "id" });
+
+  if (error) {
+    console.error("Profile creation failed:", error.message);
+    toast("Signed in, but profile setup failed. Check database policies.");
+  } else {
+    localStorage.setItem("pvp_username", cleanName);
+    toast("Player profile ready!");
+    loadProfiles();
+  }
+}
+
+async function refreshAccount() {
+  const status = document.getElementById("accountStatus");
+  const forms = document.getElementById("authForms");
+  const logoutButton = document.getElementById("logoutButton");
+  if (!status) return;
+
+  if (!pvpSupabase) {
+    status.textContent = "Connecting to Supabase…";
+    return;
+  }
+
+  if (!currentUser) {
+    status.textContent = "Not signed in.";
+    forms.style.display = "block";
+    logoutButton.style.display = "none";
+    return;
+  }
+
+  status.textContent = "Signed in as " + (currentUser.email || "player");
+  forms.style.display = "none";
+  logoutButton.style.display = "block";
+}
+
+document.getElementById("signupForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!pvpSupabase) return toast("Supabase is not connected.");
+
+  const username = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value;
+
+  if (username.length < 3 || username.length > 20) {
+    return toast("Username must be 3–20 characters.");
+  }
+
+  const button = event.submitter;
+  button.disabled = true;
+  button.textContent = "CREATING…";
+
+  try {
+    const { data, error } = await pvpSupabase.auth.signUp({
+      email, password,
+      options: { data: { username } }
+    });
+    if (error) throw error;
+
+    localStorage.setItem("pvp_username", username);
+
+    if (data.user && data.session) {
+      await createProfile(data.user, username);
+    } else {
+      toast("Account request sent. Check your email if confirmation is required.");
+    }
+  } catch (error) {
+    toast(error.message || "Sign-up failed.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "CREATE ACCOUNT";
+  }
+});
+
+document.getElementById("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!pvpSupabase) return toast("Supabase is not connected.");
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+  const button = event.submitter;
+  button.disabled = true;
+  button.textContent = "SIGNING IN…";
+
+  try {
+    const { data, error } = await pvpSupabase.auth.signInWithPassword({
+      email, password
+    });
+    if (error) throw error;
+
+    currentUser = data.user;
+    refreshAccount();
+    toast("Signed in successfully.");
+    loadProfiles();
+  } catch (error) {
+    toast(error.message || "Sign-in failed.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "SIGN IN";
+  }
+});
+
+async function logout() {
+  if (!pvpSupabase) return;
+  const { error } = await pvpSupabase.auth.signOut();
+  if (error) return toast("Sign-out failed.");
+  currentUser = null;
+  refreshAccount();
+  toast("Signed out.");
+}
+
+async function loadProfiles() {
+  const list = document.getElementById("profilesList");
+  if (!list) return;
+
+  if (!pvpSupabase) {
+    list.innerHTML = "<p>Supabase is not connected.</p>";
+    return;
+  }
+
+  list.innerHTML = "<p>Loading player profiles…</p>";
+
+  const { data, error } = await pvpSupabase
+    .from("profiles")
+    .select("username")
+    .order("username", { ascending: true })
+    .limit(50);
+
+  if (error) {
+    console.error("Profile list error:", error.message);
+    list.innerHTML = "<p>Could not load profiles. Check your database policies and connection.</p>";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.innerHTML = "<p>No player profiles yet. Create an account to appear here.</p>";
+    return;
+  }
+
+  list.replaceChildren();
+  data.forEach((profile, index) => {
+    const row = document.createElement("div");
+    row.className = "list-item";
+
+    const name = document.createElement("span");
+    name.textContent = (index + 1) + ".  " + profile.username;
+
+    const badge = document.createElement("span");
+    badge.className = "pill";
+    badge.textContent = "PLAYER";
+
+    row.append(name, badge);
+    list.appendChild(row);
+  });
+}
+
+/* Restore the UI and connect */
+renderStats();
+initSupabase();
 </script>
 </body>
 </html>
