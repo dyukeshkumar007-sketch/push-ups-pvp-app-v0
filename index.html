@@ -1,70 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-(function () {
-  function showError(message) {
-    var box = document.getElementById("debug-error");
-    if (!box) {
-      box = document.createElement("pre");
-      box.id = "debug-error";
-      box.style.cssText =
-        "position:fixed;inset:10px;z-index:999999;" +
-        "background:#200;color:#fff;padding:16px;" +
-        "overflow:auto;white-space:pre-wrap;font-size:14px";
-      document.addEventListener("DOMContentLoaded", function () {
-        document.body.appendChild(box);
-      });
-      if (document.body) document.body.appendChild(box);
-    }
-    box.textContent += "\nERROR: " + message + "\n";
-  }
-
-  window.addEventListener("error", function (event) {
-    showError(
-      event.message + " | Line: " + event.lineno
-    );
-  });
-
-  window.addEventListener("unhandledrejection", function (event) {
-    showError("Promise error: " + event.reason);
-  });
-})();
-  </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b0b10">
-<title>Push Ups PvP — True Origin</title>
+<title>Push Ups PvP — TRUE ORIGIN</title>
 
 <style>
 :root {
-  --bg:#0b0b10; --panel:#15151e; --panel2:#1d1d29;
-  --text:#f4f3f8; --muted:#a4a2b5; --line:#30303e;
-  --red:#f04455; --gold:#f5c65d; --purple:#9c7bff; --green:#70e0a0;
+  --bg:#0b0b10; --panel:#171720; --panel2:#22222e;
+  --text:#f6f4fa; --muted:#a5a2b5; --line:#343442;
+  --red:#ef4355; --gold:#f5c65d; --green:#70e0a0;
 }
 * { box-sizing:border-box; }
 body {
   margin:0; background:var(--bg); color:var(--text);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:system-ui,-apple-system,sans-serif;
 }
 button,input,select { font:inherit; }
-button { cursor:pointer; }
-button:disabled { opacity:.45; cursor:not-allowed; }
+button { cursor:pointer; touch-action:manipulation; }
+button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:2px solid var(--gold); outline-offset:3px;
+}
 .app { max-width:760px; margin:auto; min-height:100vh; padding-bottom:95px; }
 header {
-  position:sticky; top:0; z-index:5; padding:15px 18px;
-  background:#0b0b10ed; backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  position:sticky; top:0; z-index:5; padding:16px;
+  background:#101016f5; border-bottom:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center;
 }
-.brand { font-size:18px; font-weight:900; letter-spacing:1px; }
+.brand { font-weight:950; letter-spacing:1px; }
 .brand span { color:var(--red); }
-.gold-pill { background:#352b16; color:var(--gold); padding:8px 12px; border-radius:30px; font-weight:800; }
+.gold { color:var(--gold); font-weight:850; }
 main { padding:16px; }
-h1,h2,h3,p { margin-top:0; }
-h1 { font-size:27px; margin-bottom:8px; }
+h1 { font-size:28px; margin:0 0 10px; }
 h2 { font-size:21px; }
 h3 { font-size:16px; }
+p { line-height:1.5; }
 .muted { color:var(--muted); }
 .small { font-size:12px; }
 .panel {
@@ -72,108 +43,72 @@ h3 { font-size:16px; }
   border-radius:17px; padding:16px; margin-bottom:14px;
 }
 .hero {
-  padding:25px 20px; border-radius:22px; margin-bottom:16px;
-  background:radial-gradient(ellipse at 85% 0%,#58242c 0%,transparent 45%),
-             linear-gradient(135deg,#21151c,#101018 70%);
+  padding:24px 20px; border-radius:20px; margin-bottom:16px;
+  background:radial-gradient(ellipse at 90% 0%,#59242e,transparent 50%),
+  linear-gradient(135deg,#25161e,#111118 75%);
   border:1px solid #59313c;
 }
-.eyebrow { color:var(--red); font-weight:900; font-size:11px; letter-spacing:2px; }
-.hero-title { font-size:33px; font-weight:950; line-height:1.1; margin:10px 0; }
-button.primary {
-  border:0; border-radius:12px; background:var(--red); color:white;
-  padding:12px 16px; font-weight:850;
+.eyebrow { color:var(--red); font-size:11px; font-weight:900; letter-spacing:2px; }
+.hero-title { font-size:35px; line-height:1.1; font-weight:950; margin:10px 0; }
+button.primary,button.secondary,button.gold-btn,button.danger {
+  border-radius:11px; padding:12px 15px; font-weight:800;
 }
-button.secondary {
-  border:1px solid var(--line); border-radius:12px; background:var(--panel2);
-  color:var(--text); padding:11px 14px; font-weight:750;
-}
-button.gold-btn { background:var(--gold); color:#201807; border:0; }
-button.danger { background:#3c1b23; color:#ffabb3; border:1px solid #65303c; }
-button:active { transform:scale(.98); }
-.actions { display:flex; flex-wrap:wrap; gap:8px; }
+button.primary { background:var(--red); color:white; border:0; }
+button.secondary { background:var(--panel2); color:white; border:1px solid var(--line); }
+button.gold-btn { background:var(--gold); color:#241b08; border:0; }
+button.danger { background:#3b1920; color:#ffb3bc; border:1px solid #65303c; }
+button:disabled { opacity:.45; cursor:not-allowed; }
+.actions { display:flex; gap:8px; flex-wrap:wrap; }
 .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-.stat {
-  background:var(--panel2); border:1px solid var(--line);
-  border-radius:14px; padding:14px;
-}
-.stat strong { display:block; font-size:25px; }
+.stat { background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:14px; }
+.stat strong { display:block; font-size:26px; }
 .stat span { font-size:12px; color:var(--muted); }
-.progress { height:8px; background:#30303d; border-radius:10px; overflow:hidden; }
-.progress div { height:100%; width:0%; background:linear-gradient(90deg,var(--red),#ff8c70); }
 nav {
   position:fixed; bottom:0; left:0; right:0; z-index:10;
-  background:#101016f5; border-top:1px solid var(--line);
-  display:flex; justify-content:center; padding:8px 3px calc(8px + env(safe-area-inset-bottom));
+  background:#101016f7; border-top:1px solid var(--line);
+  padding:8px 3px calc(8px + env(safe-area-inset-bottom));
 }
-.nav-inner { display:flex; max-width:760px; width:100%; justify-content:space-around; }
+.nav-inner { max-width:760px; margin:auto; display:flex; justify-content:space-around; }
 .nav-btn {
-  color:var(--muted); background:transparent; border:0; padding:7px 4px;
-  display:flex; flex-direction:column; align-items:center; gap:3px;
-  font-size:10px; min-width:52px;
+  flex:1; min-width:0; border:0; background:transparent;
+  color:var(--muted); display:flex; flex-direction:column;
+  align-items:center; gap:3px; padding:7px 2px; font-size:10px;
 }
 .nav-btn b { font-size:20px; }
 .nav-btn.active { color:white; }
 .nav-btn.active b { color:var(--red); }
 .world {
-  text-align:left; border:1px solid var(--line); background:var(--panel);
-  border-radius:15px; padding:13px; color:var(--text); min-width:0;
+  text-align:left; color:white; background:var(--panel);
+  border:1px solid var(--line); border-radius:14px; padding:13px;
+  min-width:0;
 }
-.world.selected { border-color:var(--red); background:#28181f; }
-.world .emoji { font-size:26px; }
-.world strong { display:block; margin:5px 0; }
+.world.selected { border-color:var(--red); background:#2b1920; }
+.world .emoji { font-size:25px; }
+.world strong { display:block; margin:6px 0; }
 .world small { color:var(--muted); }
-.rank-row {
-  display:flex; align-items:center; gap:12px; padding:12px 0;
-  border-bottom:1px solid var(--line);
-}
-.rank-row:last-child { border:0; }
-.rank-number {
-  width:36px; height:36px; display:grid; place-items:center;
-  border-radius:10px; background:var(--panel2); color:var(--gold); font-weight:900;
-}
-.rank-row.current .rank-number { background:#52242c; color:#fff; }
-.rank-info { flex:1; }
-.rank-info strong { display:block; }
-.tag { font-size:10px; color:var(--muted); }
-.item-card {
-  background:var(--panel2); border:1px solid var(--line); border-radius:14px;
-  padding:12px; display:flex; flex-direction:column; gap:8px; min-width:0;
-}
-.item-art {
-  height:70px; display:grid; place-items:center; font-size:35px;
-  border-radius:10px; background:linear-gradient(135deg,#282532,#15151d);
-}
-.item-card button { width:100%; font-size:12px; padding:9px 5px; }
-.tabs { display:flex; gap:7px; overflow-x:auto; padding-bottom:10px; }
-.tabs button { white-space:nowrap; }
-.field { margin-bottom:13px; }
-.field label { display:block; margin-bottom:6px; color:var(--muted); font-size:13px; }
+.progress { height:8px; background:#30303d; border-radius:10px; overflow:hidden; }
+.progress div { height:100%; width:0; background:var(--red); transition:width .2s; }
+.row { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.field { display:grid; gap:6px; margin-bottom:13px; }
+.field label { color:var(--muted); font-size:13px; }
 .field input,.field select {
-  width:100%; padding:12px; color:var(--text); background:var(--panel2);
-  border:1px solid var(--line); border-radius:11px;
+  width:100%; padding:12px; border-radius:10px;
+  background:var(--panel2); border:1px solid var(--line); color:white;
 }
-.notice {
-  background:#292315; border:1px solid #514322; border-radius:12px;
-  padding:12px; font-size:12px; color:#f5dc9e; line-height:1.5;
+.rep-number { font-size:66px; font-weight:950; text-align:center; margin:12px; }
+.rep-button { width:100%; padding:22px !important; font-size:19px; }
+.item { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.item button { flex-shrink:0; }
+#toast {
+  position:fixed; left:50%; bottom:100px; transform:translateX(-50%);
+  z-index:30; background:#292936; border:1px solid var(--line);
+  padding:12px 16px; border-radius:12px; max-width:90%;
+  display:none; text-align:center;
 }
-.camera {
-  width:100%; background:#050507; border-radius:13px; max-height:350px;
-  object-fit:contain; display:block; margin:10px 0;
-}
-.rep-number { font-size:65px; line-height:1; font-weight:950; text-align:center; padding:15px; }
-.avatar {
-  min-height:220px; display:grid; place-items:center; text-align:center;
-  border-radius:16px; background:radial-gradient(ellipse,#37232e,#14131c 65%);
-  border:1px solid #543340; padding:15px;
-}
-.avatar-symbol { font-size:75px; }
-.avatar-name { font-size:19px; font-weight:900; }
-.empty { text-align:center; padding:25px 12px; color:var(--muted); }
-footer { text-align:center; padding:20px; color:var(--muted); font-size:11px; }
-.hidden { display:none!important; }
-@media(min-width:560px) {
-  main { padding:22px; }
-  .hero-title { font-size:42px; }
+#debug { white-space:pre-wrap; overflow-wrap:anywhere; color:#ffb3bc; }
+hr { border:0; border-top:1px solid var(--line); margin:15px 0; }
+@media(min-width:550px) {
+  .grid.world-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 </style>
 </head>
@@ -182,311 +117,395 @@ footer { text-align:center; padding:20px; color:var(--muted); font-size:11px; }
 <div class="app">
 <header>
   <div class="brand">PUSH UPS <span>PvP</span></div>
-  <div class="gold-pill">✦ <span id="gold">0</span></div>
+  <div class="gold">🪙 <span id="gold">0</span></div>
 </header>
 
 <main id="screen"></main>
 
-<footer>
-  TRUE ORIGIN · Train consistently. Earn your rank.<br>
-  Local prototype — online matchmaking is not connected yet.
-</footer>
-</div>
-
 <nav>
   <div class="nav-inner">
-    <button class="nav-btn active" data-tab="home"><b>⌂</b>Home</button>
-    <button class="nav-btn" data-tab="train"><b>♧</b>Train</button>
-    <button class="nav-btn" data-tab="worlds"><b>✦</b>Worlds</button>
-    <button class="nav-btn" data-tab="shop"><b>♢</b>Shop</button>
-    <button class="nav-btn" data-tab="pvp"><b>⚔</b>PvP</button>
-    <button class="nav-btn" data-tab="account"><b>☻</b>Account</button>
+    <button class="nav-btn active" data-page="home"><b>⌂</b>Home</button>
+    <button class="nav-btn" data-page="train"><b>💪</b>Train</button>
+    <button class="nav-btn" data-page="worlds"><b>⚔</b>Worlds</button>
+    <button class="nav-btn" data-page="shop"><b>🛍</b>Shop</button>
+    <button class="nav-btn" data-page="pvp"><b>🏆</b>PvP</button>
+    <button class="nav-btn" data-page="account"><b>👤</b>Account</button>
   </div>
 </nav>
-
-<!-- Mandatory first-time onboarding -->
-<div id="onboarding" style="position:fixed;inset:0;z-index:30;background:#09090df5;overflow:auto;padding:18px;display:none">
-  <div style="max-width:500px;margin:25px auto">
-    <div class="eyebrow">YOUR JOURNEY BEGINS</div>
-    <h1 style="margin-top:12px">Create your fighter.</h1>
-    <p class="muted">Set up your profile and enter the martial world of TRUE ORIGIN.</p>
-    <form id="onboarding-form" class="panel">
-      <div class="field">
-        <label for="username">Player name</label>
-        <input id="username" required minlength="3" maxlength="20" placeholder="Choose a username">
-      </div>
-      <div class="grid">
-        <div class="field">
-          <label for="age">Age</label>
-          <input id="age" type="number" required min="13" max="100" placeholder="Years">
-        </div>
-        <div class="field">
-          <label for="height">Height (cm)</label>
-          <input id="height" type="number" required min="80" max="250" placeholder="cm">
-        </div>
-      </div>
-      <div class="field">
-        <label for="weight">Weight (kg)</label>
-        <input id="weight" type="number" required min="20" max="300" step="0.1" placeholder="kg">
-      </div>
-      <div class="notice">
-        Your age and measurements stay on this device in this prototype. They are not
-        published on leaderboards. They do not reliably determine face shape or body type,
-        so your avatar uses a neutral template that you can personalise with cosmetics.
-        Only enter information you're comfortable saving on this device.
-      </div>
-      <p style="margin-top:14px;font-size:12px;color:var(--muted)">
-        Your profile setup is required to enter the game. You can review or update these
-        details later in Account.
-      </p>
-      <button class="primary" style="width:100%" type="submit">Enter TRUE ORIGIN →</button>
-    </form>
-  </div>
 </div>
 
-<script type="module">
-import { PoseLandmarker, FilesetResolver }
-  from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22";
+<div id="toast" role="status"></div>
+
+<script>
+(function () {
+"use strict";
 
 const $ = id => document.getElementById(id);
-const STORE = "pushups_pvp_true_origin_v1";
+const KEY = "pushups_pvp_true_origin_v1";
 
 const worlds = [
-  {
-    id:"true-origin", name:"TRUE ORIGIN", emoji:"🌑",
-    description:"The central martial world",
-    ranks:["Mortal Realm","Tempering Realm","Meridian Realm","Master Realm","Grandmaster Realm","Transcendent Realm","True Origin Realm"]
-  },
-  {
-    id:"naruto", name:"Naruto", emoji:"🍥",
-    description:"Shinobi progression",
-    ranks:["Academy Student","Genin","Chūnin","Jōnin","ANBU","Kage","Six Paths"]
-  },
-  {
-    id:"bleach", name:"Bleach", emoji:"⚔️",
-    description:"Soul Reaper progression",
-    ranks:["Academy Student","Seated Officer","Lieutenant","Captain","Bankai Master","Transcendent"]
-  },
-  {
-    id:"dragon-ball", name:"Dragon Ball", emoji:"🐉",
-    description:"Warrior progression",
-    ranks:["Martial Artist","Elite Fighter","Super Saiyan","Super Saiyan God","Super Saiyan Blue","Ultra Instinct"]
-  },
-  {
-    id:"one-piece", name:"One Piece", emoji:"☠️",
-    description:"Pirate progression",
-    ranks:["Rookie Pirate","Notorious Pirate","Grand Line Veteran","New World Raider","Commander","Emperor","Pirate Legend"]
-  },
-  {
-    id:"jujutsu", name:"Jujutsu Kaisen", emoji:"👁️",
-    description:"Sorcerer progression",
-    ranks:["Grade 4","Grade 3","Grade 2","Semi-Grade 1","Grade 1","Special Grade"]
-  },
-  {
-    id:"solo-leveling", name:"Solo Leveling", emoji:"🖤",
-    description:"Hunter progression",
-    ranks:["E-Rank","D-Rank","C-Rank","B-Rank","A-Rank","S-Rank","National Level","Monarch"]
-  }
+  {id:"naruto", name:"Naruto", icon:"🍃",
+   ranks:["Academy Student","Genin","Chunin","Jonin","ANBU","Kage","Six Paths"]},
+  {id:"bleach", name:"Bleach", icon:"⚔️",
+   ranks:["Academy Student","Seated Officer","Lieutenant","Captain","Bankai Master","Transcendent"]},
+  {id:"dragonball", name:"Dragon Ball", icon:"🐉",
+   ranks:["Martial Artist","Elite Fighter","Super Saiyan","Super Saiyan God","Super Saiyan Blue","Ultra Instinct"]},
+  {id:"onepiece", name:"One Piece", icon:"🏴‍☠️",
+   ranks:["Rookie Pirate","Notorious Pirate","Grand Line Veteran","New World Raider","Commander","Emperor","Pirate Legend"]},
+  {id:"jjk", name:"Jujutsu Kaisen", icon:"👁️",
+   ranks:["Grade 4","Grade 3","Grade 2","Semi-Grade 1","Grade 1","Special Grade"]},
+  {id:"solo", name:"Solo Leveling", icon:"🌑",
+   ranks:["E-Rank","D-Rank","C-Rank","B-Rank","A-Rank","S-Rank","National Level","Monarch"]},
+  {id:"origin", name:"TRUE ORIGIN", icon:"🔥",
+   ranks:["Mortal Realm","Tempering Realm","Meridian Realm","Master Realm","Grandmaster Realm","Transcendent Realm","True Origin Realm"]}
 ];
-
-// These are game progression titles inspired by each setting.
-// Some are canon terms, while others are custom game milestones.
-const categories = ["T-Shirts","Pants","Shirts","Jeans","Neckties","Belts","Shoes","Accessories"];
 
 const items = [
-  {id:"tank",name:"Basic White Tank",category:"T-Shirts",emoji:"👕",price:0},
-  {id:"sweats",name:"Grey Sweatpants",category:"Pants",emoji:"👖",price:0},
-  {id:"flipflops",name:"Black Flip-Flops",category:"Shoes",emoji:"🩴",price:0},
-  {id:"buzz",name:"Buzz Cut",category:"Hair",emoji:"💈",price:0},
-  {id:"rough-beard",name:"Unshaven Facial Hair",category:"Facial Hair",emoji:"🧔",price:0},
-  {id:"black-tee",name:"Black Oversized Tee",category:"T-Shirts",emoji:"🖤",price:120},
-  {id:"white-shirt",name:"White Formal Shirt",category:"Shirts",emoji:"🤍",price:160},
-  {id:"gold-shirt",name:"Golden Shirt",category:"Shirts",emoji:"✨",price:350},
-  {id:"dark-jeans",name:"Dark Wide-Leg Jeans",category:"Jeans",emoji:"👖",price:250},
-  {id:"gold-jeans",name:"Gold-Trim Jeans",category:"Jeans",emoji:"🌟",price:450},
-  {id:"black-tie",name:"Black Tie",category:"Neckties",emoji:"🎀",price:100},
-  {id:"red-tie",name:"Crimson Tie",category:"Neckties",emoji:"🟥",price:120},
-  {id:"black-belt",name:"Black Leather Belt",category:"Belts",emoji:"➖",price:100},
-  {id:"formal-shoes",name:"Black Formal Shoes",category:"Shoes",emoji:"👞",price:200},
-  {id:"silver-chain",name:"Silver Chain",category:"Accessories",emoji:"⛓️",price:220},
-  {id:"silver-glasses",name:"Silver Frame Glasses",category:"Accessories",emoji:"👓",price:180},
-  {id:"origin-coat",name:"True Origin Coat",category:"Shirts",emoji:"🌑",price:0,rankRequired:6},
-  {id:"kage-jacket",name:"Kage Prestige Jacket",category:"Shirts",emoji:"🍥",price:0,world:"naruto",rankRequired:5},
-  {id:"captain-coat",name:"Captain Prestige Coat",category:"Shirts",emoji:"⚔️",price:0,world:"bleach",rankRequired:3},
-  {id:"emperor-fit",name:"Emperor Outfit",category:"Shirts",emoji:"☠️",price:0,world:"one-piece",rankRequired:5},
-  {id:"monarch-fit",name:"Monarch Outfit",category:"Shirts",emoji:"🖤",price:0,world:"solo-leveling",rankRequired:7}
+  {id:"tank",name:"Basic White Tank Top",cat:"Shirt",price:0},
+  {id:"sweats",name:"Grey Sweatpants",cat:"Pants",price:0},
+  {id:"flipflops",name:"Black Flip-Flops",cat:"Shoes",price:0},
+  {id:"buzz",name:"Buzz Cut",cat:"Hair",price:0},
+  {id:"beard",name:"Rough Stubble",cat:"Facial Hair",price:0},
+  {id:"blacktee",name:"Black Oversized Tee",cat:"Shirt",price:100},
+  {id:"maroon",name:"Maroon Formal Shirt",cat:"Shirt",price:150},
+  {id:"jeans",name:"Dark Straight Jeans",cat:"Pants",price:120},
+  {id:"boots",name:"Black Boots",cat:"Shoes",price:100},
+  {id:"middlepart",name:"Middle-Part Hair",cat:"Hair",price:100},
+  {id:"chain",name:"Silver Chain",cat:"Accessories",price:80},
+  {id:"kage",name:"Kage Prestige Jacket",cat:"Prestige",price:500,world:"naruto",rank:5},
+  {id:"captain",name:"Captain's Coat",cat:"Prestige",price:500,world:"bleach",rank:3},
+  {id:"emperor",name:"Emperor Outfit",cat:"Prestige",price:700,world:"onepiece",rank:5},
+  {id:"monarch",name:"Monarch Outfit",cat:"Prestige",price:800,world:"solo",rank:7},
+  {id:"originfit",name:"TRUE ORIGIN Regalia",cat:"Prestige",price:1000,world:"origin",rank:6}
 ];
 
-const defaultState = () => ({
-  profile:null,
-  gold:0,
-  totalPushups:0,
-  totalXP:0,
-  sessions:0,
-  selectedWorld:"true-origin",
-  worldXP:Object.fromEntries(worlds.map(w=>[w.id,0])),
-  worldPushups:Object.fromEntries(worlds.map(w=>[w.id,0])),
-  owned:["tank","sweats","flipflops","buzz","rough-beard"],
-  equipped:{
-    "T-Shirts":"tank","Pants":"sweats","Shoes":"flipflops",
-    "Hair":"buzz","Facial Hair":"rough-beard"
-  },
-  recent:[],
-  repSession:0
-});
+function freshState() {
+  return {
+    username:"",
+    age:"",
+    height:"",
+    weight:"",
+    gold:0,
+    totalReps:0,
+    totalXP:0,
+    sessions:0,
+    selectedWorld:"origin",
+    worldXP:{},
+    owned:["tank","sweats","flipflops","buzz","beard"],
+    equipped:{Shirt:"tank",Pants:"sweats",Shoes:"flipflops",Hair:"buzz","Facial Hair":"beard"},
+    category:"Shirt",
+    reps:0,
+    onboarding:false
+  };
+}
 
-let state = loadState();
-let activeTab = "home";
-let shopCategory = "T-Shirts";
-let cameraStream = null;
-let landmarker = null;
-let cameraRunning = false;
-let lastPoseTime = 0;
-let pushupPhase = "up";
-let poseBusy = false;
-let message = "";
+let state = freshState();
+let page = "home";
+let toastTimer;
 
-function loadState(){
+function load() {
   try {
-    const saved = localStorage.getItem(STORE);
-    if (!saved) return defaultState();
-    const parsed = JSON.parse(saved);
-    return {...defaultState(),...parsed};
-  } catch { return defaultState(); }
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!saved || typeof saved !== "object") return;
+    state = Object.assign(freshState(), saved);
+    if (!Array.isArray(state.owned)) state.owned = freshState().owned;
+    if (!state.worldXP || typeof state.worldXP !== "object") state.worldXP = {};
+    if (!state.equipped || typeof state.equipped !== "object") state.equipped = {};
+  } catch (e) {
+    console.error("Could not load saved progress", e);
+  }
 }
-function save(){
-  localStorage.setItem(STORE,JSON.stringify(state));
-  $("gold").textContent = state.gold;
+
+function save() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch (e) {
+    console.error("Could not save progress", e);
+    notify("Browser storage unavailable. Progress may not persist.");
+  }
 }
-function esc(s){
-  return String(s??"").replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
+
+function notify(message) {
+  const el = $("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.style.display = "none"; }, 2400);
 }
-function getWorld(id=state.selectedWorld){return worlds.find(w=>w.id===id)||worlds[0];}
-function rankIndex(worldId,xp){
-  const world=getWorld(worldId);
-  return Math.min(world.ranks.length-1,Math.floor(Math.max(0,xp)/100));
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
 }
-function getRank(worldId=state.selectedWorld){
-  const w=getWorld(worldId), xp=state.worldXP[worldId]||0;
-  const index=rankIndex(worldId,xp);
-  return {name:w.ranks[index],index,level:(xp%100)+1,xp,next:100-(xp%100)};
+
+function world() {
+  return worlds.find(w => w.id === state.selectedWorld) || worlds[6];
 }
-function globalRank(){
-  const xp=state.totalXP;
-  const labels=["Awakened","Wraith","Phantom","Eclipse","Void Sovereign","Origin Ascendant","TRUE ORIGIN"];
-  const index=Math.min(6,Math.floor(xp/700));
-  return {name:labels[index],index,level:(xp%700)+1};
+
+function xpForWorld(id) {
+  return Number(state.worldXP[id] || 0);
 }
-function notify(text){
-  message=text;
-  render();
-  setTimeout(()=>{if(message===text){message="";render();}},2400);
+
+function rankIndex(id) {
+  const w = worlds.find(x => x.id === id);
+  return Math.min(w.ranks.length - 1, Math.floor(xpForWorld(id) / 100));
 }
-function addWorkout(reps){
-  reps=Math.max(0,Math.floor(reps));
-  if(!reps)return;
-  const world=state.selectedWorld;
-  const xp=reps*2;
-  state.totalPushups+=reps;
-  state.totalXP+=xp;
-  state.worldPushups[world]=(state.worldPushups[world]||0)+reps;
-  state.worldXP[world]=(state.worldXP[world]||0)+xp;
-  state.gold+=Math.max(1,Math.floor(reps/5));
-  state.sessions++;
-  state.recent.unshift({date:new Date().toLocaleDateString(),reps,world});
-  state.recent=state.recent.slice(0,8);
-  state.repSession=0;
+
+function rankName(id) {
+  const w = worlds.find(x => x.id === id);
+  return w.ranks[rankIndex(id)];
+}
+
+function addReps(count) {
+  count = Math.floor(Number(count));
+  if (!Number.isFinite(count) || count < 1 || count > 500) {
+    notify("Enter a valid rep count from 1 to 500.");
+    return;
+  }
+  state.reps += count;
+  state.totalReps += count;
+  state.totalXP += count * 10;
+  state.gold += count * 2;
+  const id = state.selectedWorld;
+  state.worldXP[id] = xpForWorld(id) + count * 10;
   save();
-  notify(`Workout saved: ${reps} reps · +${xp} XP`);
+  render();
+  notify("+" + count * 10 + " XP · +" + count * 2 + " gold");
 }
-function progressBar(percent){
-  return `<div class="progress"><div style="width:${Math.max(0,Math.min(100,percent))}%"></div></div>`;
+
+function startSession() {
+  if (state.reps > 0) {
+    state.sessions++;
+    state.reps = 0;
+    save();
+    render();
+    notify("Training session completed!");
+  } else {
+    notify("Record some reps first!");
+    page = "train";
+    render();
+  }
 }
-function panelTitle(title,sub=""){
-  return `<div style="margin-bottom:13px"><h2 style="margin-bottom:4px">${title}</h2>${sub?`<div class="muted small">${sub}</div>`:""}</div>`;
-}
-function worldCards(){
-  return `<div class="grid">${worlds.map(w=>`
-    <button class="world ${state.selectedWorld===w.id?"selected":""}" data-world="${w.id}">
-      <div class="emoji">${w.emoji}</div>
-      <strong>${esc(w.name)}</strong><small>${esc(w.description)}</small>
-      ${state.selectedWorld===w.id?'<div class="tag" style="margin-top:7px;color:var(--red)">ACTIVE WORLD</div>':""}
-    </button>`).join("")}</div>`;
-}
-function rankList(worldId=state.selectedWorld){
-  const w=getWorld(worldId), current=rankIndex(worldId,state.worldXP[worldId]||0);
-  return w.ranks.map((rank,i)=>`
-    <div class="rank-row ${i===current?"current":""}">
-      <div class="rank-number">${String(i+1).padStart(2,"0")}</div>
-      <div class="rank-info"><strong>${esc(rank)}</strong><div class="tag">${i===current?"CURRENT RANK":i<current?"UNLOCKED":"LOCKED"}</div></div>
-      ${i<current?'<span style="color:var(--green)">✓</span>':i===current?'<span>◆</span>':'<span class="muted">🔒</span>'}
-    </div>`).join("");
-}
-function homeScreen(){
-  const r=getRank(),g=globalRank(),w=getWorld();
+
+function onboardingScreen() {
   return `
-  <section class="hero">
-    <div class="eyebrow">THE MARTIAL WORLD AWAITS</div>
-    <div class="hero-title">TRUE<br>ORIGIN.</div>
-    <p class="muted">Your path. Your discipline. Your progression.</p>
-    <div style="margin:20px 0">
-      <div class="small muted">CURRENT WORLD</div>
-      <h2 style="margin:5px 0">${w.emoji} ${esc(w.name)}</h2>
-      <strong>${esc(r.name)}</strong>
-      ${progressBar((r.xp%100))}
-      <div class="small muted" style="margin-top:6px">${r.xp%100}/100 XP to next world rank</div>
+    <div class="hero">
+      <div class="eyebrow">YOUR JOURNEY BEGINS</div>
+      <div class="hero-title">RISE FROM<br>ZERO.</div>
+      <p class="muted">Train consistently. Earn XP. Climb your chosen world.</p>
     </div>
-    <div class="actions"><button class="primary" data-go="train">Start Training →</button><button class="secondary" data-go="worlds">Change World</button></div>
-  </section>
-  <div class="grid">
-    <div class="stat"><strong>${state.totalPushups}</strong><span>Total push-ups</span></div>
-    <div class="stat"><strong>${state.totalXP}</strong><span>Universal XP</span></div>
-    <div class="stat"><strong>${state.sessions}</strong><span>Saved sessions</span></div>
-    <div class="stat"><strong>${esc(g.name)}</strong><span>Overall realm</span></div>
-  </div>
-  <section class="panel" style="margin-top:14px">
-    ${panelTitle("Your current world","Choose a world to train its progression.")}
-    ${worldCards()}
-  </section>
-  <section class="panel">
-    ${panelTitle("Recent training")}
-    ${state.recent.length?state.recent.map(s=>`<div class="rank-row"><div class="rank-number">💪</div><div class="rank-info"><strong>${s.reps} push-ups</strong><div class="tag">${esc(s.world)} · ${esc(s.date)}</div></div></div>`).join(""):'<div class="empty">Your first session starts here.</div>'}
-  </section>`;
+    <div class="panel">
+      <h2>Create your profile</h2>
+      <p class="muted small">These details stay in this browser in this prototype. They do not determine your body shape or appearance.</p>
+      <form id="onboardForm">
+        <div class="field"><label for="username">Username</label><input id="username" name="username" minlength="3" maxlength="20" required placeholder="Choose a username"></div>
+        <div class="grid">
+          <div class="field"><label for="age">Age</label><input id="age" name="age" type="number" min="13" max="100" required></div>
+          <div class="field"><label for="height">Height (cm)</label><input id="height" name="height" type="number" min="80" max="250" required></div>
+        </div>
+        <div class="field"><label for="weight">Weight (kg)</label><input id="weight" name="weight" type="number" min="20" max="300" step="0.1" required></div>
+        <button class="primary" type="submit">ENTER THE ARENA →</button>
+      </form>
+    </div>`;
 }
-function trainScreen(){
-  const w=getWorld();
+
+function homeScreen() {
   return `
-  <div class="eyebrow">TRAINING GROUNDS</div>
-  <h1>Put in the work.</h1>
-  <p class="muted">Train in ${esc(w.name)}. Your saved reps award universal XP and world XP.</p>
-  <section class="panel">
-    ${panelTitle("Camera rep counter","Use a side-on view with your shoulders, elbows and wrists visible.")}
-    <video id="camera" class="camera" autoplay muted playsinline></video>
-    <div id="camera-status" class="muted small">Camera is off. Rep detection is experimental and may miscount.</div>
-    <div class="rep-number" id="rep-count">${state.repSession}</div>
-    <div class="actions">
-      <button class="primary" id="start-camera">Start camera</button>
-      <button class="secondary" id="stop-camera">Stop</button>
+    <div class="hero">
+      <div class="eyebrow">WELCOME BACK, ${escapeHTML(state.username || "FIGHTER")}</div>
+      <div class="hero-title">YOUR NEXT<br>LEVEL AWAITS.</div>
+      <p class="muted">Every rep counts. Build your progress one session at a time.</p>
+      <button class="primary" data-go="train">START TRAINING →</button>
     </div>
-    <p class="small muted" style="margin-top:12px">Camera processing runs in your browser. This code does not upload video.</p>
-  </section>
-  <section class="panel">
-    ${panelTitle("Manual workout","Use this if your camera is unavailable or miscounts.")}
-    <div class="actions" style="margin-bottom:12px">
-      <button class="secondary" id="minus-rep">− 1</button>
-      <button class="primary" id="plus-rep">+ 1 rep</button>
-      <button class="secondary" id="plus-five">+ 5 reps</button>
-    </div>
-    <div class="actions">
-      <button class="primary" id="save-workout">Save session</button>
-      <button class="secondary" id="reset-session">Reset session</button>
-    </div>
-  </section>
-  <section class="panel">
-    ${panelTitle("Session rewards")}
     <div class="grid">
-      <div class="stat"><strong>+2</strong><span>XP per rep</span></div>
-      <div class="stat"><strong>+1 ✦</strong><span>Gold per 5 reps</span></div>
- 
+      <div class="stat"><strong>${state.totalReps}</strong><span>Total push-ups</span></div>
+      <div class="stat"><strong>${state.totalXP}</strong><span>Total XP</span></div>
+      <div class="stat"><strong>${state.sessions}</strong><span>Sessions completed</span></div>
+      <div class="stat"><strong>${state.gold}</strong><span>Gold earned</span></div>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <div class="eyebrow">CURRENT UNIVERSE</div>
+      <h2>${world().icon} ${world().name}</h2>
+      <p class="gold">${rankName(state.selectedWorld)}</p>
+      <div class="progress"><div style="width:${xpForWorld(state.selectedWorld)%100}%"></div></div>
+      <p class="muted small">${xpForWorld(state.selectedWorld)%100}/100 XP to the next rank</p>
+      <button class="secondary" data-go="worlds">Explore worlds</button>
+    </div>`;
+}
+
+function trainScreen() {
+  return `
+    <h1>Training Arena</h1>
+    <p class="muted">Choose your world, then record your reps. This version uses manual counting.</p>
+    <div class="panel">
+      <div class="row"><span class="muted">Current world</span><strong>${world().icon} ${world().name}</strong></div>
+      <div class="rep-number">${state.reps}</div>
+      <p class="muted" style="text-align:center">REPS THIS SESSION</p>
+      <button class="primary rep-button" data-action="rep">+1 REP</button>
+      <div class="actions" style="margin-top:12px">
+        <button class="secondary" data-action="rep5">+5 reps</button>
+        <button class="secondary" data-action="undo">Undo 1 rep</button>
+        <button class="gold-btn" data-action="finish">Finish session</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Training rewards</h3>
+      <p>Each recorded rep earns <span class="gold">10 XP</span> and <span class="gold">2 gold</span>.</p>
+      <p class="muted small">Manual counts are self-reported. They are not verified by a camera or another player.</p>
+    </div>`;
+}
+
+function worldsScreen() {
+  return `
+    <h1>Choose your universe</h1>
+    <p class="muted">Each world has its own rank progression.</p>
+    <div class="grid world-grid">
+      ${worlds.map(w => `
+        <button class="world ${w.id===state.selectedWorld?"selected":""}" data-world="${w.id}">
+          <span class="emoji">${w.icon}</span>
+          <strong>${w.name}</strong>
+          <small>${rankName(w.id)}</small>
+          <div class="progress" style="margin-top:10px"><div style="width:${xpForWorld(w.id)%100}%"></div></div>
+        </button>`).join("")}
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <div class="eyebrow">TRUE ORIGIN POWER SYSTEM</div>
+      <h2>Seven Realms</h2>
+      ${worlds[6].ranks.map((r,i)=>`
+        <div class="row" style="padding:10px 0;border-bottom:1px solid var(--line)">
+          <span>${i+1}. ${r}</span>
+          <span class="muted small">${rankIndex("origin")>=i?"UNLOCKED":"LOCKED"}</span>
+        </div>`).join("")}
+    </div>`;
+}
+
+function shopScreen() {
+  const categories = ["Shirt","Pants","Shoes","Hair","Facial Hair","Accessories","Prestige"];
+  return `
+    <h1>Cosmetic Shop</h1>
+    <p class="muted">Cosmetics only. No gameplay advantages.</p>
+    <div class="panel">
+      <div class="row"><span>Your balance</span><span class="gold">🪙 ${state.gold} gold</span></div>
+    </div>
+    <div class="actions" style="margin-bottom:14px">
+      ${categories.map(c=>`<button class="${state.category===c?"primary":"secondary"}" data-cat="${c}">${c}</button>`).join("")}
+    </div>
+    ${items.filter(it=>it.cat===state.category).map(it=>{
+      const owned = state.owned.includes(it.id);
+      const equipped = state.equipped[it.cat]===it.id;
+      let locked = false;
+      let lockText = "";
+      if (it.world) {
+        locked = state.selectedWorld !== it.world || rankIndex(it.world) < it.rank;
+        lockText = state.selectedWorld !== it.world
+          ? "Select "+(worlds.find(w=>w.id===it.world)?.name || it.world)+" to unlock"
+          : "Requires "+(worlds.find(w=>w.id===it.world)?.ranks[it.rank] || "higher rank");
+      }
+      return `<div class="panel item">
+        <div><strong>${it.name}</strong><div class="muted small">${locked?lockText:(owned?(equipped?"Equipped":"Owned"):(it.price===0?"Free":it.price+" gold"))}</div></div>
+        <button class="${equipped?"secondary":owned?"secondary":"gold-btn"}" data-item="${it.id}" ${locked?"disabled":""}>${equipped?"Equipped":owned?"Equip":it.price===0?"Claim":"Buy"}</button>
+      </div>`;
+    }).join("")}`;
+}
+
+function pvpScreen() {
+  return `
+    <h1>PvP Arena</h1>
+    <div class="hero">
+      <div class="eyebrow">COMING NEXT</div>
+      <div class="hero-title">CHALLENGE<br>YOUR RIVALS.</div>
+      <p class="muted">Online matchmaking is not connected in this version.</p>
+    </div>
+    <div class="panel">
+      <h2>Local profile stats</h2>
+      <p>Total reps: <strong>${state.totalReps}</strong></p>
+      <p>Total XP: <strong>${state.totalXP}</strong></p>
+      <p class="muted small">This is not a global leaderboard. Online matches require Supabase integration and server-side validation.</p>
+    </div>
+    <button class="secondary" data-go="train">Train while you wait</button>`;
+}
+
+function accountScreen() {
+  return `
+    <h1>Your Account</h1>
+    <div class="panel">
+      <div class="field"><label for="editUsername">Username</label><input id="editUsername" maxlength="20" minlength="3" value="${escapeHTML(state.username)}"></div>
+      <p class="muted small">This prototype saves progress in this browser only. Clearing browser storage may erase it.</p>
+      <button class="primary" data-action="saveProfile">Save username</button>
+    </div>
+    <div class="panel">
+      <h3>Equipped cosmetics</h3>
+      ${Object.entries(state.equipped).map(([cat,id])=>{
+        const it=items.find(x=>x.id===id);
+        return `<div class="row" style="padding:8px 0"><span>${cat}</span><span>${it?it.name:"None"}</span></div>`;
+      }).join("")}
+    </div>
+    <div class="panel">
+      <h3>Local data</h3>
+      <p class="muted small">Resetting deletes this prototype's locally saved progress in this browser.</p>
+      <button class="danger" data-action="reset">Reset all local progress</button>
+    </div>
+    <div class="panel"><h3>Diagnostics</h3><div id="debug" class="small">JavaScript loaded. Navigation handlers active.</div></div>`;
+}
+
+function render() {
+  $("gold").textContent = state.gold;
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page===page);
+  });
+
+  if (!state.onboarding) {
+    $("screen").innerHTML = onboardingScreen();
+    return;
+  }
+
+  const screens = {
+    home:homeScreen,
+    train:trainScreen,
+    worlds:worldsScreen,
+    shop:shopScreen,
+    pvp:pvpScreen,
+    account:accountScreen
+  };
+  $("screen").innerHTML = (screens[page] || homeScreen)();
+}
+
+function go(nextPage) {
+  page = nextPage;
+  render();
+  window.scrollTo({top:0,behavior:"auto"});
+}
+
+function handleClick(event) {
+  const button = event.target.closest("button");
+  if (!button) return;
+
+  if (button.dataset.page) {
+    go(button.dataset.page);
+    return;
+  }
+  if (button.dataset.go) {
+    go(button.dataset.go);
+    return;
+  }
+  if (button.dataset.world) {
+    state.selectedWorld = button.dataset.world;
+    save();
+    render();
+    notify("Selected " + world().name);
+    return;
+  }
+  if (button.dataset.cat) {
+    state.category = button.dataset.cat;
+    render();
+    return;
+  }
+  if (button.dataset.item) {
+    const it = items.find(x=>x.id===button.dataset.item);
+    if (!it) return;
+    if (!state.owned.includes(it.id)) {
+      if (state.gold < it.price) {
+        notify("Not enough gold. Earn more
