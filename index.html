@@ -509,3 +509,63 @@ function handleClick(event) {
     if (!state.owned.includes(it.id)) {
       if (state.gold < it.price) {
         notify("Not enough gold. Earn more
+               
+ gold to buy this item."); 
+        return;
+      }
+      state.gold -= it.price;
+      state.owned.push(it.id);
+      saveState();
+      notify("Purchased " + it.name + "!");
+    }
+
+    state.equipped = state.equipped || {};
+    state.equipped[it.category] = it.id;
+    saveState();
+    render();
+    return;
+  }
+
+  if (button.dataset.action === "nav") {
+    state.page = button.dataset.page;
+    saveState();
+    render();
+    return;
+  }
+
+  if (button.dataset.action === "rep") {
+    state.pushups = (state.pushups || 0) + 1;
+    state.gold = (state.gold || 0) + 1;
+    saveState();
+    render();
+    return;
+  }
+
+  if (button.dataset.action === "reset-rep") {
+    state.pushups = 0;
+    saveState();
+    render();
+    return;
+  }
+
+  if (button.dataset.action === "save-profile") {
+    const username = document.querySelector("#username");
+    if (username && username.value.trim()) {
+      state.username = username.value.trim();
+      saveState();
+      notify("Profile saved!");
+      render();
+    }
+    return;
+  }
+});
+
+document.addEventListener("submit", function(event) {
+  event.preventDefault();
+});
+
+render();
+</script>
+</body>
+</html>
+
