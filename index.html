@@ -2,739 +2,461 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090b0a">
-<title>Push Ups PvP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b10">
+<title>Push Ups PvP — True Origin</title>
 
 <style>
 :root {
-  --bg: #090b0a;
-  --panel: #131714;
-  --green: #a6ff4d;
-  --muted: #929b92;
-  --border: #293029;
-  --red: #ff6262;
+  --bg:#0b0b10; --panel:#15151e; --panel2:#1d1d29;
+  --text:#f4f3f8; --muted:#a4a2b5; --line:#30303e;
+  --red:#f04455; --gold:#f5c65d; --purple:#9c7bff; --green:#70e0a0;
 }
-
-* { box-sizing: border-box; }
-
+* { box-sizing:border-box; }
 body {
-  margin: 0;
-  background: var(--bg);
-  color: #f5f7f4;
-  font-family: system-ui, -apple-system, sans-serif;
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-
-button, input { font: inherit; }
-
-button {
-  cursor: pointer;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 16px;
-  background: #202620;
-  color: white;
-  font-weight: 700;
-}
-
-button:disabled { opacity: .5; cursor: not-allowed; }
-
-button.primary {
-  background: var(--green);
-  color: #10140c;
-  border-color: var(--green);
-}
-
-button.danger { color: var(--red); }
-
+button,input,select { font:inherit; }
+button { cursor:pointer; }
+button:disabled { opacity:.45; cursor:not-allowed; }
+.app { max-width:760px; margin:auto; min-height:100vh; padding-bottom:95px; }
 header {
-  padding: 20px 16px 12px;
-  max-width: 900px;
-  margin: auto;
+  position:sticky; top:0; z-index:5; padding:15px 18px;
+  background:#0b0b10ed; backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
 }
-
-.logo { font-size: 23px; font-weight: 900; }
-.logo span { color: var(--green); }
-
-header p { color: var(--muted); margin: 5px 0; }
-
-nav {
-  display: flex;
-  gap: 7px;
-  padding: 12px 16px;
-  overflow-x: auto;
-  max-width: 900px;
-  margin: auto;
-}
-
-nav button { white-space: nowrap; }
-nav button.active { color: var(--green); border-color: var(--green); }
-
-main {
-  max-width: 900px;
-  padding: 10px 16px 100px;
-  margin: auto;
-}
-
-.page { display: none; }
-.page.active { display: block; }
-
-h1 { font-size: clamp(27px, 6vw, 43px); margin: 14px 0 8px; }
-h2 { font-size: 21px; }
-p { line-height: 1.5; }
-
-.muted { color: var(--muted); }
-
+.brand { font-size:18px; font-weight:900; letter-spacing:1px; }
+.brand span { color:var(--red); }
+.gold-pill { background:#352b16; color:var(--gold); padding:8px 12px; border-radius:30px; font-weight:800; }
+main { padding:16px; }
+h1,h2,h3,p { margin-top:0; }
+h1 { font-size:27px; margin-bottom:8px; }
+h2 { font-size:21px; }
+h3 { font-size:16px; }
+.muted { color:var(--muted); }
+.small { font-size:12px; }
 .panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 18px;
-  margin: 14px 0;
+  background:var(--panel); border:1px solid var(--line);
+  border-radius:17px; padding:16px; margin-bottom:14px;
 }
-
 .hero {
-  padding: 28px 20px;
-  border: 1px solid #38472e;
-  background: linear-gradient(140deg, #182116, #101310 65%);
-  border-radius: 22px;
-  margin-top: 10px;
+  padding:25px 20px; border-radius:22px; margin-bottom:16px;
+  background:radial-gradient(ellipse at 85% 0%,#58242c 0%,transparent 45%),
+             linear-gradient(135deg,#21151c,#101018 70%);
+  border:1px solid #59313c;
 }
-
-.hero h1 span { color: var(--green); }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+.eyebrow { color:var(--red); font-weight:900; font-size:11px; letter-spacing:2px; }
+.hero-title { font-size:33px; font-weight:950; line-height:1.1; margin:10px 0; }
+button.primary {
+  border:0; border-radius:12px; background:var(--red); color:white;
+  padding:12px 16px; font-weight:850;
 }
-
+button.secondary {
+  border:1px solid var(--line); border-radius:12px; background:var(--panel2);
+  color:var(--text); padding:11px 14px; font-weight:750;
+}
+button.gold-btn { background:var(--gold); color:#201807; border:0; }
+button.danger { background:#3c1b23; color:#ffabb3; border:1px solid #65303c; }
+button:active { transform:scale(.98); }
+.actions { display:flex; flex-wrap:wrap; gap:8px; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
 .stat {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 17px;
-  border-radius: 16px;
+  background:var(--panel2); border:1px solid var(--line);
+  border-radius:14px; padding:14px;
 }
-
-.stat strong {
-  display: block;
-  font-size: 29px;
-  color: var(--green);
+.stat strong { display:block; font-size:25px; }
+.stat span { font-size:12px; color:var(--muted); }
+.progress { height:8px; background:#30303d; border-radius:10px; overflow:hidden; }
+.progress div { height:100%; width:0%; background:linear-gradient(90deg,var(--red),#ff8c70); }
+nav {
+  position:fixed; bottom:0; left:0; right:0; z-index:10;
+  background:#101016f5; border-top:1px solid var(--line);
+  display:flex; justify-content:center; padding:8px 3px calc(8px + env(safe-area-inset-bottom));
 }
-
-.stat small { color: var(--muted); }
-
-.actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
-
-label { display: block; margin: 12px 0 6px; color: var(--muted); }
-
-input {
-  width: 100%;
-  background: #090b0a;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: white;
-  padding: 13px;
+.nav-inner { display:flex; max-width:760px; width:100%; justify-content:space-around; }
+.nav-btn {
+  color:var(--muted); background:transparent; border:0; padding:7px 4px;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  font-size:10px; min-width:52px;
 }
-
-#cameraBox {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: #050605;
-  border: 1px solid #354034;
-  border-radius: 16px;
-  overflow: hidden;
+.nav-btn b { font-size:20px; }
+.nav-btn.active { color:white; }
+.nav-btn.active b { color:var(--red); }
+.world {
+  text-align:left; border:1px solid var(--line); background:var(--panel);
+  border-radius:15px; padding:13px; color:var(--text); min-width:0;
 }
-
-#video, #skeleton {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transform: scaleX(-1);
+.world.selected { border-color:var(--red); background:#28181f; }
+.world .emoji { font-size:26px; }
+.world strong { display:block; margin:5px 0; }
+.world small { color:var(--muted); }
+.rank-row {
+  display:flex; align-items:center; gap:12px; padding:12px 0;
+  border-bottom:1px solid var(--line);
 }
-
-#video { opacity: .92; }
-#skeleton { pointer-events: none; }
-
-#cameraMessage {
-  position: absolute;
-  z-index: 2;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  background: #080b08dc;
-  border: 1px solid #394237;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 13px;
-  color: var(--green);
+.rank-row:last-child { border:0; }
+.rank-number {
+  width:36px; height:36px; display:grid; place-items:center;
+  border-radius:10px; background:var(--panel2); color:var(--gold); font-weight:900;
 }
-
-#repNumber {
-  font-size: clamp(65px, 16vw, 100px);
-  font-weight: 900;
-  line-height: 1.1;
-  text-align: center;
-  color: var(--green);
-  margin: 16px 0 5px;
+.rank-row.current .rank-number { background:#52242c; color:#fff; }
+.rank-info { flex:1; }
+.rank-info strong { display:block; }
+.tag { font-size:10px; color:var(--muted); }
+.item-card {
+  background:var(--panel2); border:1px solid var(--line); border-radius:14px;
+  padding:12px; display:flex; flex-direction:column; gap:8px; min-width:0;
 }
-
-.center { text-align: center; }
-.badge {
-  display: inline-block;
-  background: #202820;
-  color: var(--green);
-  padding: 6px 10px;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 800;
+.item-art {
+  height:70px; display:grid; place-items:center; font-size:35px;
+  border-radius:10px; background:linear-gradient(135deg,#282532,#15151d);
 }
-
+.item-card button { width:100%; font-size:12px; padding:9px 5px; }
+.tabs { display:flex; gap:7px; overflow-x:auto; padding-bottom:10px; }
+.tabs button { white-space:nowrap; }
+.field { margin-bottom:13px; }
+.field label { display:block; margin-bottom:6px; color:var(--muted); font-size:13px; }
+.field input,.field select {
+  width:100%; padding:12px; color:var(--text); background:var(--panel2);
+  border:1px solid var(--line); border-radius:11px;
+}
 .notice {
-  color: var(--muted);
-  font-size: 13px;
-  border-left: 3px solid var(--green);
-  padding-left: 12px;
+  background:#292315; border:1px solid #514322; border-radius:12px;
+  padding:12px; font-size:12px; color:#f5dc9e; line-height:1.5;
 }
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: var(--muted);
-  font-size: 12px;
+.camera {
+  width:100%; background:#050507; border-radius:13px; max-height:350px;
+  object-fit:contain; display:block; margin:10px 0;
+}
+.rep-number { font-size:65px; line-height:1; font-weight:950; text-align:center; padding:15px; }
+.avatar {
+  min-height:220px; display:grid; place-items:center; text-align:center;
+  border-radius:16px; background:radial-gradient(ellipse,#37232e,#14131c 65%);
+  border:1px solid #543340; padding:15px;
+}
+.avatar-symbol { font-size:75px; }
+.avatar-name { font-size:19px; font-weight:900; }
+.empty { text-align:center; padding:25px 12px; color:var(--muted); }
+footer { text-align:center; padding:20px; color:var(--muted); font-size:11px; }
+.hidden { display:none!important; }
+@media(min-width:560px) {
+  main { padding:22px; }
+  .hero-title { font-size:42px; }
 }
 </style>
 </head>
 
 <body>
-
+<div class="app">
 <header>
-  <div class="logo">PUSH UPS <span>PvP</span></div>
-  <p>Every rep counts. Earn your place.</p>
+  <div class="brand">PUSH UPS <span>PvP</span></div>
+  <div class="gold-pill">✦ <span id="gold">0</span></div>
 </header>
 
+<main id="screen"></main>
+
+<footer>
+  TRUE ORIGIN · Train consistently. Earn your rank.<br>
+  Local prototype — online matchmaking is not connected yet.
+</footer>
+</div>
+
 <nav>
-  <button class="active" data-page="home">Home</button>
-  <button data-page="train">Train</button>
-  <button data-page="pvp">PvP</button>
-  <button data-page="ranks">Ranks</button>
-  <button data-page="account">Account</button>
+  <div class="nav-inner">
+    <button class="nav-btn active" data-tab="home"><b>⌂</b>Home</button>
+    <button class="nav-btn" data-tab="train"><b>♧</b>Train</button>
+    <button class="nav-btn" data-tab="worlds"><b>✦</b>Worlds</button>
+    <button class="nav-btn" data-tab="shop"><b>♢</b>Shop</button>
+    <button class="nav-btn" data-tab="pvp"><b>⚔</b>PvP</button>
+    <button class="nav-btn" data-tab="account"><b>☻</b>Account</button>
+  </div>
 </nav>
 
-<main>
-
-<section class="page active" id="home">
-  <div class="hero">
-    <span class="badge">YOUR TRAINING STARTS HERE</span>
-    <h1>ONE MORE REP.<br><span>ONE STEP HIGHER.</span></h1>
-    <p class="muted">Train at your pace. Track your progress. Compete when online PvP is ready.</p>
-    <div class="actions">
-      <button class="primary" onclick="showPage('train')">START TRAINING →</button>
-      <button onclick="showPage('account')">YOUR ACCOUNT</button>
-    </div>
+<!-- Mandatory first-time onboarding -->
+<div id="onboarding" style="position:fixed;inset:0;z-index:30;background:#09090df5;overflow:auto;padding:18px;display:none">
+  <div style="max-width:500px;margin:25px auto">
+    <div class="eyebrow">YOUR JOURNEY BEGINS</div>
+    <h1 style="margin-top:12px">Create your fighter.</h1>
+    <p class="muted">Set up your profile and enter the martial world of TRUE ORIGIN.</p>
+    <form id="onboarding-form" class="panel">
+      <div class="field">
+        <label for="username">Player name</label>
+        <input id="username" required minlength="3" maxlength="20" placeholder="Choose a username">
+      </div>
+      <div class="grid">
+        <div class="field">
+          <label for="age">Age</label>
+          <input id="age" type="number" required min="13" max="100" placeholder="Years">
+        </div>
+        <div class="field">
+          <label for="height">Height (cm)</label>
+          <input id="height" type="number" required min="80" max="250" placeholder="cm">
+        </div>
+      </div>
+      <div class="field">
+        <label for="weight">Weight (kg)</label>
+        <input id="weight" type="number" required min="20" max="300" step="0.1" placeholder="kg">
+      </div>
+      <div class="notice">
+        Your age and measurements stay on this device in this prototype. They are not
+        published on leaderboards. They do not reliably determine face shape or body type,
+        so your avatar uses a neutral template that you can personalise with cosmetics.
+        Only enter information you're comfortable saving on this device.
+      </div>
+      <p style="margin-top:14px;font-size:12px;color:var(--muted)">
+        Your profile setup is required to enter the game. You can review or update these
+        details later in Account.
+      </p>
+      <button class="primary" style="width:100%" type="submit">Enter TRUE ORIGIN →</button>
+    </form>
   </div>
-
-  <div class="grid" style="margin-top:14px">
-    <div class="stat">
-      <strong id="homeTotal">0</strong>
-      <small>Total push-ups</small>
-    </div>
-    <div class="stat">
-      <strong id="homeSessions">0</strong>
-      <small>Sessions completed</small>
-    </div>
-  </div>
-
-  <div class="panel">
-    <h2>How it works</h2>
-    <p>01 — Position your phone so your body is visible.</p>
-    <p>02 — Let the camera detector identify your pose.</p>
-    <p>03 — Perform controlled push-ups and check your rep count.</p>
-    <p class="notice">Camera detection is experimental. Check your form yourself, and stop if you feel pain, dizziness, or unusual discomfort.</p>
-  </div>
-</section>
-
-<section class="page" id="train">
-  <h1>Training arena</h1>
-  <p class="muted">No fixed rep target. Finish when you choose.</p>
-
-  <div class="panel">
-    <div class="badge" id="detectorBadge">DETECTOR NOT STARTED</div>
-
-    <div id="cameraBox" style="margin-top:14px">
-      <video id="video" autoplay playsinline muted></video>
-      <canvas id="skeleton"></canvas>
-      <div id="cameraMessage" role="status">Press START CAMERA to load the detector.</div>
-    </div>
-
-    <div class="center">
-      <div id="repNumber">0</div>
-      <div class="muted">REPS DETECTED THIS SESSION</div>
-      <p id="formStatus">Camera is off.</p>
-    </div>
-
-    <div class="actions">
-      <button id="startButton" class="primary" onclick="startCamera()">START CAMERA</button>
-      <button id="stopButton" onclick="stopCamera()">STOP CAMERA</button>
-      <button onclick="resetSession()">RESET REPS</button>
-      <button class="primary" onclick="finishSession()">FINISH SESSION</button>
-    </div>
-  </div>
-
-  <div class="panel">
-    <h2>Camera setup</h2>
-    <p class="muted">Place the phone securely at a side angle, far enough away to show your shoulders, elbows, hips and ankles. Good lighting helps.</p>
-    <p class="notice">The detector runs in your browser. Your camera video is not intentionally uploaded by this app. The counter is a prototype and may miss or incorrectly count repetitions.</p>
-  </div>
-</section>
-
-<section class="page" id="pvp">
-  <h1>Real-time PvP</h1>
-  <div class="panel">
-    <span class="badge">COMING NEXT</span>
-    <h2>Challenge another player</h2>
-    <p class="muted">Live rooms, room codes, verified scores and worldwide competition are not connected yet.</p>
-    <p>First we're getting reliable pose detection and rep counting working. Then we can build secure online matches.</p>
-  </div>
-</section>
-
-<section class="page" id="ranks">
-  <h1>Leaderboard</h1>
-  <div class="panel">
-    <span class="badge">LOCAL STATS ONLY</span>
-    <h2>Your current record</h2>
-    <div class="stat">
-      <strong id="rankTotal">0</strong>
-      <small>Total reps on this device</small>
-    </div>
-    <p class="muted">A worldwide leaderboard will require verified server-side score handling. This screen does not yet show global rankings.</p>
-  </div>
-</section>
-
-<section class="page" id="account">
-  <h1>Your account</h1>
-
-  <div class="panel" id="accountStatus">
-    <span class="badge">SUPABASE AUTH</span>
-    <p id="authMessage">Sign in or create an account to use authentication.</p>
-
-    <label for="username">Username</label>
-    <input id="username" maxlength="20" placeholder="3–20 characters">
-
-    <label for="email">Email</label>
-    <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
-
-    <label for="password">Password</label>
-    <input id="password" type="password" autocomplete="current-password" placeholder="At least 6 characters">
-
-    <div class="actions">
-      <button class="primary" onclick="signUp()">CREATE ACCOUNT</button>
-      <button onclick="signIn()">SIGN IN</button>
-      <button class="danger" onclick="signOut()">SIGN OUT</button>
-    </div>
-  </div>
-
-  <div class="panel">
-    <h2>Privacy</h2>
-    <p class="muted">Your training totals currently stay in this browser's local storage. Authentication uses Supabase. This prototype does not upload workout video or submit training scores to the database.</p>
-  </div>
-</section>
-
-</main>
-
-<footer>Push Ups PvP · Experimental build</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</div>
 
 <script type="module">
-import {
-  FilesetResolver,
-  PoseLandmarker
-} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/vision_bundle.mjs";
+import { PoseLandmarker, FilesetResolver }
+  from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22";
 
 const $ = id => document.getElementById(id);
+const STORE = "pushups_pvp_true_origin_v1";
 
-const SUPABASE_URL = "https://fyonthacrbhwtsngfwcx.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Jv6ytXHc5sOuf9c5x3qR-Q_MuyhYi83";
-const REDIRECT_URL = "https://dyukeshkumar007-sketch.github.io/push-ups-pvp-app-v0/";
+const worlds = [
+  {
+    id:"true-origin", name:"TRUE ORIGIN", emoji:"🌑",
+    description:"The central martial world",
+    ranks:["Mortal Realm","Tempering Realm","Meridian Realm","Master Realm","Grandmaster Realm","Transcendent Realm","True Origin Realm"]
+  },
+  {
+    id:"naruto", name:"Naruto", emoji:"🍥",
+    description:"Shinobi progression",
+    ranks:["Academy Student","Genin","Chūnin","Jōnin","ANBU","Kage","Six Paths"]
+  },
+  {
+    id:"bleach", name:"Bleach", emoji:"⚔️",
+    description:"Soul Reaper progression",
+    ranks:["Academy Student","Seated Officer","Lieutenant","Captain","Bankai Master","Transcendent"]
+  },
+  {
+    id:"dragon-ball", name:"Dragon Ball", emoji:"🐉",
+    description:"Warrior progression",
+    ranks:["Martial Artist","Elite Fighter","Super Saiyan","Super Saiyan God","Super Saiyan Blue","Ultra Instinct"]
+  },
+  {
+    id:"one-piece", name:"One Piece", emoji:"☠️",
+    description:"Pirate progression",
+    ranks:["Rookie Pirate","Notorious Pirate","Grand Line Veteran","New World Raider","Commander","Emperor","Pirate Legend"]
+  },
+  {
+    id:"jujutsu", name:"Jujutsu Kaisen", emoji:"👁️",
+    description:"Sorcerer progression",
+    ranks:["Grade 4","Grade 3","Grade 2","Semi-Grade 1","Grade 1","Special Grade"]
+  },
+  {
+    id:"solo-leveling", name:"Solo Leveling", emoji:"🖤",
+    description:"Hunter progression",
+    ranks:["E-Rank","D-Rank","C-Rank","B-Rank","A-Rank","S-Rank","National Level","Monarch"]
+  }
+];
 
-let supabase = null;
-let poseLandmarker = null;
-let stream = null;
-let running = false;
-let detecting = false;
-let animationId = 0;
-let reps = 0;
-let sessions = Number(localStorage.getItem("pvpSessions") || 0);
-let total = Number(localStorage.getItem("pvpTotal") || 0);
-let phase = "up";
-let lastVideoTime = -1;
-let lastRepTime = 0;
-let lastStatus = "Camera is off.";
-let currentUser = null;
+// These are game progression titles inspired by each setting.
+// Some are canon terms, while others are custom game milestones.
+const categories = ["T-Shirts","Pants","Shirts","Jeans","Neckties","Belts","Shoes","Accessories"];
 
-const canvas = $("skeleton");
-const ctx = canvas.getContext("2d");
-const video = $("video");
+const items = [
+  {id:"tank",name:"Basic White Tank",category:"T-Shirts",emoji:"👕",price:0},
+  {id:"sweats",name:"Grey Sweatpants",category:"Pants",emoji:"👖",price:0},
+  {id:"flipflops",name:"Black Flip-Flops",category:"Shoes",emoji:"🩴",price:0},
+  {id:"buzz",name:"Buzz Cut",category:"Hair",emoji:"💈",price:0},
+  {id:"rough-beard",name:"Unshaven Facial Hair",category:"Facial Hair",emoji:"🧔",price:0},
+  {id:"black-tee",name:"Black Oversized Tee",category:"T-Shirts",emoji:"🖤",price:120},
+  {id:"white-shirt",name:"White Formal Shirt",category:"Shirts",emoji:"🤍",price:160},
+  {id:"gold-shirt",name:"Golden Shirt",category:"Shirts",emoji:"✨",price:350},
+  {id:"dark-jeans",name:"Dark Wide-Leg Jeans",category:"Jeans",emoji:"👖",price:250},
+  {id:"gold-jeans",name:"Gold-Trim Jeans",category:"Jeans",emoji:"🌟",price:450},
+  {id:"black-tie",name:"Black Tie",category:"Neckties",emoji:"🎀",price:100},
+  {id:"red-tie",name:"Crimson Tie",category:"Neckties",emoji:"🟥",price:120},
+  {id:"black-belt",name:"Black Leather Belt",category:"Belts",emoji:"➖",price:100},
+  {id:"formal-shoes",name:"Black Formal Shoes",category:"Shoes",emoji:"👞",price:200},
+  {id:"silver-chain",name:"Silver Chain",category:"Accessories",emoji:"⛓️",price:220},
+  {id:"silver-glasses",name:"Silver Frame Glasses",category:"Accessories",emoji:"👓",price:180},
+  {id:"origin-coat",name:"True Origin Coat",category:"Shirts",emoji:"🌑",price:0,rankRequired:6},
+  {id:"kage-jacket",name:"Kage Prestige Jacket",category:"Shirts",emoji:"🍥",price:0,world:"naruto",rankRequired:5},
+  {id:"captain-coat",name:"Captain Prestige Coat",category:"Shirts",emoji:"⚔️",price:0,world:"bleach",rankRequired:3},
+  {id:"emperor-fit",name:"Emperor Outfit",category:"Shirts",emoji:"☠️",price:0,world:"one-piece",rankRequired:5},
+  {id:"monarch-fit",name:"Monarch Outfit",category:"Shirts",emoji:"🖤",price:0,world:"solo-leveling",rankRequired:7}
+];
 
-function message(text) {
-  $("cameraMessage").textContent = text;
-  lastStatus = text;
-}
-
-function detectorStatus(text) {
-  $("detectorBadge").textContent = text;
-}
-
-function refreshStats() {
-  $("homeTotal").textContent = total;
-  $("rankTotal").textContent = total;
-  $("homeSessions").textContent = sessions;
-}
-
-function saveStats() {
-  localStorage.setItem("pvpTotal", String(total));
-  localStorage.setItem("pvpSessions", String(sessions));
-  refreshStats();
-}
-
-window.showPage = function(page) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.page === page));
-  $(page).classList.add("active");
-};
-
-document.querySelectorAll("nav button").forEach(button => {
-  button.addEventListener("click", () => showPage(button.dataset.page));
+const defaultState = () => ({
+  profile:null,
+  gold:0,
+  totalPushups:0,
+  totalXP:0,
+  sessions:0,
+  selectedWorld:"true-origin",
+  worldXP:Object.fromEntries(worlds.map(w=>[w.id,0])),
+  worldPushups:Object.fromEntries(worlds.map(w=>[w.id,0])),
+  owned:["tank","sweats","flipflops","buzz","rough-beard"],
+  equipped:{
+    "T-Shirts":"tank","Pants":"sweats","Shoes":"flipflops",
+    "Hair":"buzz","Facial Hair":"rough-beard"
+  },
+  recent:[],
+  repSession:0
 });
 
-function resizeCanvas() {
-  const rect = canvas.getBoundingClientRect();
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = Math.max(1, Math.round(rect.width * dpr));
-  canvas.height = Math.max(1, Math.round(rect.height * dpr));
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
+let state = loadState();
+let activeTab = "home";
+let shopCategory = "T-Shirts";
+let cameraStream = null;
+let landmarker = null;
+let cameraRunning = false;
+let lastPoseTime = 0;
+let pushupPhase = "up";
+let poseBusy = false;
+let message = "";
 
-window.addEventListener("resize", resizeCanvas);
-
-function drawPose(landmarks) {
-  const w = canvas.clientWidth;
-  const h = canvas.clientHeight;
-  ctx.clearRect(0, 0, w, h);
-
-  if (!landmarks || !landmarks.length) return;
-
-  // MediaPipe landmark connections.
-  const connections = [
-    [11,12], [11,13], [13,15], [12,14], [14,16],
-    [11,23], [12,24], [23,24], [23,25], [25,27],
-    [24,26], [26,28], [27,29], [29,31], [28,30],
-    [30,32], [15,17], [15,19], [15,21], [16,18],
-    [16,20], [16,22]
-  ];
-
-  const visible = i => {
-    const p = landmarks[i];
-    return p && (p.visibility == null || p.visibility > 0.35);
-  };
-
-  ctx.lineWidth = 3;
-  ctx.lineCap = "round";
-  ctx.strokeStyle = "#a6ff4d";
-  ctx.shadowColor = "#a6ff4d";
-  ctx.shadowBlur = 7;
-
-  for (const [a,b] of connections) {
-    if (!visible(a) || !visible(b)) continue;
-    ctx.beginPath();
-    ctx.moveTo(landmarks[a].x * w, landmarks[a].y * h);
-    ctx.lineTo(landmarks[b].x * w, landmarks[b].y * h);
-    ctx.stroke();
-  }
-
-  ctx.shadowBlur = 0;
-  for (let i = 11; i < landmarks.length; i++) {
-    if (!visible(i)) continue;
-    const p = landmarks[i];
-    ctx.beginPath();
-    ctx.arc(p.x * w, p.y * h, 4, 0, Math.PI * 2);
-    ctx.fillStyle = "#ffffff";
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#a6ff4d";
-    ctx.stroke();
-  }
-}
-
-function angle(a,b,c) {
-  const abx = a.x - b.x;
-  const aby = a.y - b.y;
-  const cbx = c.x - b.x;
-  const cby = c.y - b.y;
-
-  const dot = abx * cbx + aby * cby;
-  const mag1 = Math.hypot(abx, aby);
-  const mag2 = Math.hypot(cbx, cby);
-  if (!mag1 || !mag2) return 0;
-
-  const cos = Math.max(-1, Math.min(1, dot / (mag1 * mag2)));
-  return Math.acos(cos) * 180 / Math.PI;
-}
-
-function countPose(lm) {
-  const indices = [11,12,13,14,15,16,23,24,27,28];
-  const visible = i => lm[i] && (lm[i].visibility == null || lm[i].visibility > 0.4);
-
-  if (!indices.some(visible) || !visible(11) || !visible(13) || !visible(15)) {
-    $("formStatus").textContent = "Move back so your upper body is visible.";
-    return;
-  }
-
-  const left = angle(lm[11], lm[13], lm[15]);
-  const rightVisible = visible(12) && visible(14) && visible(16);
-  const right = rightVisible ? angle(lm[12], lm[14], lm[16]) : left;
-
-  // Prefer the arm with the clearest visible landmarks.
-  const elbow = rightVisible ? Math.min(left, right) : left;
-
-  if (elbow < 100) {
-    phase = "down";
-    $("formStatus").textContent = "DOWN POSITION — press up smoothly.";
-  } else if (elbow > 155) {
-    $("formStatus").textContent = "TOP POSITION — lower with control.";
-    if (phase === "down" && performance.now() - lastRepTime > 450) {
-      reps++;
-      lastRepTime = performance.now();
-      phase = "up";
-      $("repNumber").textContent = reps;
-      message("Pose detected · " + reps + " reps counted");
-    }
-  } else {
-    $("formStatus").textContent = "Pose detected — keep moving through the rep.";
-  }
-}
-
-async function loadDetector() {
-  if (poseLandmarker) return;
-
-  detectorStatus("LOADING AI...");
-  message("Loading pose detector and AI model. First load may take a little while.");
-
-  const vision = await FilesetResolver.forVisionTasks(
-    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
-  );
-
-  poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
-    baseOptions: {
-      modelAssetPath:
-        "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
-      delegate: "CPU"
-    },
-    runningMode: "VIDEO",
-    numPoses: 1,
-    minPoseDetectionConfidence: 0.45,
-    minPosePresenceConfidence: 0.45,
-    minTrackingConfidence: 0.45
-  });
-
-  detectorStatus("AI READY");
-}
-
-async function detectFrame() {
-  if (!running || detecting) return;
-
-  if (video.readyState < 2 || video.videoWidth === 0) {
-    animationId = requestAnimationFrame(detectFrame);
-    return;
-  }
-
-  if (video.currentTime === lastVideoTime) {
-    animationId = requestAnimationFrame(detectFrame);
-    return;
-  }
-
-  detecting = true;
-  lastVideoTime = video.currentTime;
-
+function loadState(){
   try {
-    const result = poseLandmarker.detectForVideo(video, performance.now());
-    const landmarks = result.landmarks && result.landmarks[0];
-
-    resizeCanvas();
-
-    if (landmarks) {
-      drawPose(landmarks);
-      countPose(landmarks);
-      detectorStatus("POSE DETECTED");
-    } else {
-      ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-      detectorStatus("SEARCHING FOR BODY...");
-      $("formStatus").textContent = "No full body detected. Adjust your phone and lighting.";
-      message("AI is running. Move into the camera view so your body can be detected.");
-    }
-  } catch (error) {
-    console.error("Pose detection error:", error);
-    message("Detection error: " + (error.message || String(error)));
-    detectorStatus("DETECTION ERROR");
-    running = false;
-  } finally {
-    detecting = false;
-  }
-
-  if (running) animationId = requestAnimationFrame(detectFrame);
+    const saved = localStorage.getItem(STORE);
+    if (!saved) return defaultState();
+    const parsed = JSON.parse(saved);
+    return {...defaultState(),...parsed};
+  } catch { return defaultState(); }
 }
-
-window.startCamera = async function() {
-  if (running) return;
-
-  $("startButton").disabled = true;
-
-  try {
-    message("Requesting camera permission...");
-
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      throw new Error("Camera unavailable. Open this app using HTTPS in Chrome.");
-    }
-
-    await loadDetector();
-
-    stream = await navigator.mediaDevices.getUserMedia({
-      audio: false,
-      video: {
-        facingMode: "user",
-        width: { ideal: 640 },
-        height: { ideal: 480 }
-      }
-    });
-
-    video.srcObject = stream;
-    await video.play();
-
-    await new Promise(resolve => {
-      if (video.readyState >= 2) resolve();
-      else video.addEventListener("loadeddata", resolve, { once: true });
-    });
-
-    resizeCanvas();
-    running = true;
-    phase = "up";
-    lastVideoTime = -1;
-    $("formStatus").textContent = "Stand where your body is visible.";
-    message("Camera and AI ready. Position your body in the frame.");
-    detectFrame();
-  } catch (error) {
-    console.error("Camera/detector startup error:", error);
-    detectorStatus("STARTUP FAILED");
-    message("ERROR: " + (error.message || String(error)) + " — check internet and reload.");
-    $("formStatus").textContent = "Could not start camera or detector.";
-    if (stream) stream.getTracks().forEach(track => track.stop());
-    stream = null;
-    video.srcObject = null;
-  } finally {
-    $("startButton").disabled = false;
-  }
-};
-
-window.stopCamera = function() {
-  running = false;
-  cancelAnimationFrame(animationId);
-
-  if (stream) {
-    stream.getTracks().forEach(track => track.stop());
-    stream = null;
-  }
-
-  video.srcObject = null;
-  ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-  detectorStatus(poseLandmarker ? "AI READY · CAMERA OFF" : "DETECTOR NOT STARTED");
-  message("Camera stopped.");
-  $("formStatus").textContent = "Camera is off.";
-};
-
-window.resetSession = function() {
-  reps = 0;
-  phase = "up";
-  $("repNumber").textContent = "0";
-  $("formStatus").textContent = "Session reps reset.";
-};
-
-window.finishSession = function() {
-  stopCamera();
-
-  if (reps > 0) {
-    total += reps;
-    sessions++;
-    saveStats();
-    alert("Session finished!\n\nReps counted: " + reps +
-      "\nTotal on this device: " + total +
-      "\n\nCamera-based counting is experimental. Review your form and results.");
-  } else {
-    alert("Session finished. No reps were counted.");
-  }
-
-  reps = 0;
-  phase = "up";
-  $("repNumber").textContent = "0";
-};
-
-function setupSupabase() {
-  if (!window.supabase || !window.supabase.createClient) {
-    $("authMessage").textContent = "Authentication library failed to load. Check your internet connection.";
-    return;
-  }
-
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  supabase.auth.getSession().then(({ data }) => {
-    currentUser = data.session?.user || null;
-    showAuthState();
-  });
-
-  supabase.auth.onAuthStateChange((_event, session) => {
-    currentUser = session?.user || null;
-    showAuthState();
-  });
+function save(){
+  localStorage.setItem(STORE,JSON.stringify(state));
+  $("gold").textContent = state.gold;
 }
-
-function showAuthState() {
-  if (currentUser) {
-    $("authMessage").textContent = "Signed in as " + currentUser.email;
-    $("email").value = currentUser.email || "";
-  } else {
-    $("authMessage").textContent = "Not signed in. Create an account or sign in.";
-  }
+function esc(s){
+  return String(s??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
-
-window.signUp = async function() {
-  if (!supabase) return alert("Authentication is not ready. Reload the page.");
-
-  const username = $("username").value.trim();
-  const email = $("email").value.trim();
-  const password = $("password").value;
-
-  if (username.length < 3 || username.length > 20) {
-    return alert("Username must be 3–20 characters.");
-  }
-  if (!email || password.length < 6) {
-    return alert("Enter a valid email and a password of at least 6 characters.");
-  }
-
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { username },
-      emailRedirectTo: REDIRECT_URL
-    }
-  });
-
-  if (error) return alert("Sign-up failed: " + error.message);
-
-  if (data.session) {
-    await ensureProfile(username);
-    alert("Account created!");
-  } else 
+function getWorld(id=state.selectedWorld){return worlds.find(w=>w.id===id)||worlds[0];}
+function rankIndex(worldId,xp){
+  const world=getWorld(worldId);
+  return Math.min(world.ranks.length-1,Math.floor(Math.max(0,xp)/100));
+}
+function getRank(worldId=state.selectedWorld){
+  const w=getWorld(worldId), xp=state.worldXP[worldId]||0;
+  const index=rankIndex(worldId,xp);
+  return {name:w.ranks[index],index,level:(xp%100)+1,xp,next:100-(xp%100)};
+}
+function globalRank(){
+  const xp=state.totalXP;
+  const labels=["Awakened","Wraith","Phantom","Eclipse","Void Sovereign","Origin Ascendant","TRUE ORIGIN"];
+  const index=Math.min(6,Math.floor(xp/700));
+  return {name:labels[index],index,level:(xp%700)+1};
+}
+function notify(text){
+  message=text;
+  render();
+  setTimeout(()=>{if(message===text){message="";render();}},2400);
+}
+function addWorkout(reps){
+  reps=Math.max(0,Math.floor(reps));
+  if(!reps)return;
+  const world=state.selectedWorld;
+  const xp=reps*2;
+  state.totalPushups+=reps;
+  state.totalXP+=xp;
+  state.worldPushups[world]=(state.worldPushups[world]||0)+reps;
+  state.worldXP[world]=(state.worldXP[world]||0)+xp;
+  state.gold+=Math.max(1,Math.floor(reps/5));
+  state.sessions++;
+  state.recent.unshift({date:new Date().toLocaleDateString(),reps,world});
+  state.recent=state.recent.slice(0,8);
+  state.repSession=0;
+  save();
+  notify(`Workout saved: ${reps} reps · +${xp} XP`);
+}
+function progressBar(percent){
+  return `<div class="progress"><div style="width:${Math.max(0,Math.min(100,percent))}%"></div></div>`;
+}
+function panelTitle(title,sub=""){
+  return `<div style="margin-bottom:13px"><h2 style="margin-bottom:4px">${title}</h2>${sub?`<div class="muted small">${sub}</div>`:""}</div>`;
+}
+function worldCards(){
+  return `<div class="grid">${worlds.map(w=>`
+    <button class="world ${state.selectedWorld===w.id?"selected":""}" data-world="${w.id}">
+      <div class="emoji">${w.emoji}</div>
+      <strong>${esc(w.name)}</strong><small>${esc(w.description)}</small>
+      ${state.selectedWorld===w.id?'<div class="tag" style="margin-top:7px;color:var(--red)">ACTIVE WORLD</div>':""}
+    </button>`).join("")}</div>`;
+}
+function rankList(worldId=state.selectedWorld){
+  const w=getWorld(worldId), current=rankIndex(worldId,state.worldXP[worldId]||0);
+  return w.ranks.map((rank,i)=>`
+    <div class="rank-row ${i===current?"current":""}">
+      <div class="rank-number">${String(i+1).padStart(2,"0")}</div>
+      <div class="rank-info"><strong>${esc(rank)}</strong><div class="tag">${i===current?"CURRENT RANK":i<current?"UNLOCKED":"LOCKED"}</div></div>
+      ${i<current?'<span style="color:var(--green)">✓</span>':i===current?'<span>◆</span>':'<span class="muted">🔒</span>'}
+    </div>`).join("");
+}
+function homeScreen(){
+  const r=getRank(),g=globalRank(),w=getWorld();
+  return `
+  <section class="hero">
+    <div class="eyebrow">THE MARTIAL WORLD AWAITS</div>
+    <div class="hero-title">TRUE<br>ORIGIN.</div>
+    <p class="muted">Your path. Your discipline. Your progression.</p>
+    <div style="margin:20px 0">
+      <div class="small muted">CURRENT WORLD</div>
+      <h2 style="margin:5px 0">${w.emoji} ${esc(w.name)}</h2>
+      <strong>${esc(r.name)}</strong>
+      ${progressBar((r.xp%100))}
+      <div class="small muted" style="margin-top:6px">${r.xp%100}/100 XP to next world rank</div>
+    </div>
+    <div class="actions"><button class="primary" data-go="train">Start Training →</button><button class="secondary" data-go="worlds">Change World</button></div>
+  </section>
+  <div class="grid">
+    <div class="stat"><strong>${state.totalPushups}</strong><span>Total push-ups</span></div>
+    <div class="stat"><strong>${state.totalXP}</strong><span>Universal XP</span></div>
+    <div class="stat"><strong>${state.sessions}</strong><span>Saved sessions</span></div>
+    <div class="stat"><strong>${esc(g.name)}</strong><span>Overall realm</span></div>
+  </div>
+  <section class="panel" style="margin-top:14px">
+    ${panelTitle("Your current world","Choose a world to train its progression.")}
+    ${worldCards()}
+  </section>
+  <section class="panel">
+    ${panelTitle("Recent training")}
+    ${state.recent.length?state.recent.map(s=>`<div class="rank-row"><div class="rank-number">💪</div><div class="rank-info"><strong>${s.reps} push-ups</strong><div class="tag">${esc(s.world)} · ${esc(s.date)}</div></div></div>`).join(""):'<div class="empty">Your first session starts here.</div>'}
+  </section>`;
+}
+function trainScreen(){
+  const w=getWorld();
+  return `
+  <div class="eyebrow">TRAINING GROUNDS</div>
+  <h1>Put in the work.</h1>
+  <p class="muted">Train in ${esc(w.name)}. Your saved reps award universal XP and world XP.</p>
+  <section class="panel">
+    ${panelTitle("Camera rep counter","Use a side-on view with your shoulders, elbows and wrists visible.")}
+    <video id="camera" class="camera" autoplay muted playsinline></video>
+    <div id="camera-status" class="muted small">Camera is off. Rep detection is experimental and may miscount.</div>
+    <div class="rep-number" id="rep-count">${state.repSession}</div>
+    <div class="actions">
+      <button class="primary" id="start-camera">Start camera</button>
+      <button class="secondary" id="stop-camera">Stop</button>
+    </div>
+    <p class="small muted" style="margin-top:12px">Camera processing runs in your browser. This code does not upload video.</p>
+  </section>
+  <section class="panel">
+    ${panelTitle("Manual workout","Use this if your camera is unavailable or miscounts.")}
+    <div class="actions" style="margin-bottom:12px">
+      <button class="secondary" id="minus-rep">− 1</button>
+      <button class="primary" id="plus-rep">+ 1 rep</button>
+      <button class="secondary" id="plus-five">+ 5 reps</button>
+    </div>
+    <div class="actions">
+      <button class="primary" id="save-workout">Save session</button>
+      <button class="secondary" id="reset-session">Reset session</button>
+    </div>
+  </section>
+  <section class="panel">
+    ${panelTitle("Session rewards")}
+    <div class="grid">
+      <div class="stat"><strong>+2</strong><span>XP per rep</span></div>
+      <div class="stat"><strong>+1 ✦</strong><span>Gold per 5 reps</span></div>
+ 
